@@ -1,0 +1,8 @@
+{
+  "name": "weatherer-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "github.com/samuelisch/weatherer-social-app",
+  "author": "Samuel Chan",
+  "license": "MIT"
+}
