@@ -1,0 +1,14 @@
+{
+  "posts": [
+    {
+      "id": 4982432,
+      "content": "This is the first post ever!",
+      "username": "hamstersfriend"
+    },
+    {
+      "id": 34239012,
+      "content": "Another post here, not sure what i'm doing yet.",
+      "username": "cluelesscoder"
+    }
+  ]
+}
