@@ -18,10 +18,16 @@ const update = async (id, newObj) => {
   return response.data
 }
 
+const remove = async (id) => {
+  const response = await axios.delete(`${url}/${id}`)
+  return response.data
+}
+
 const postService = {
   getAll,
   create,
-  update
+  update,
+  remove
 }
 
 export default postService

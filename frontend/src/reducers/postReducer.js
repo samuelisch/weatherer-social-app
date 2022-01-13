@@ -12,6 +12,8 @@ const postReducer = (state = [], action) => {
           ? action.data 
           : post
       )
+    case 'DELETE_POST':
+      return state.filter(post => post.id !== action.data.id)
     default:
       return state
   }
@@ -44,6 +46,16 @@ export const likePost = (post) => {
     dispatch({
       type: 'LIKE_POST',
       data: returnedPost
+    })
+  }
+}
+
+export const deletePost = (id) => {
+  return async dispatch => {
+    await postService.remove(id)
+    dispatch({
+      type: 'DELETE_POST',
+      data: { id }
     })
   }
 }
