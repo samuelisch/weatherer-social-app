@@ -3,12 +3,12 @@
     {
       "id": 4982432,
       "content": "This is the first post ever!",
-      "likes": 2
+      "likes": 3
     },
     {
       "id": 34239012,
       "content": "Another post here, not sure what i'm doing yet.",
-      "likes": 0
+      "likes": 1
     }
   ]
 }
