@@ -9,6 +9,11 @@
       "id": 34239012,
       "content": "Another post here, not sure what i'm doing yet.",
       "likes": 1
+    },
+    {
+      "content": "test form",
+      "likes": 1,
+      "id": 34239013
     }
   ]
 }

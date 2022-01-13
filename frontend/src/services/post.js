@@ -9,7 +9,7 @@ const getAll = async () => {
 
 const create = async (content) => {
   const newObj = { content, likes: 0}
-  const response = await axios.post(newObj)
+  const response = await axios.post(url, newObj)
   return response.data
 }
 
