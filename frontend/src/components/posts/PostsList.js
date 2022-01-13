@@ -1,17 +1,15 @@
-import React, { useState, useEffect } from 'react'
-import postService from '../../services/post'
+import React, { useEffect } from 'react'
 import Post from './Post'
+import { useSelector, useDispatch } from 'react-redux'
+import { initializePosts } from '../../reducers/postReducer'
 
 const PostsList = () => {
-  const [posts, setPosts] = useState([])
+  const dispatch = useDispatch()
+  const posts = useSelector(state => state.posts)
 
   useEffect(() => {
-    postService
-      .getAll()
-      .then(returnedPosts => {
-        setPosts(returnedPosts)
-      })
-  },[])
+    dispatch(initializePosts())
+  }, [dispatch])
 
   const postsToRender = posts.map(post => (
     <Post 

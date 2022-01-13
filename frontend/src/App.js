@@ -1,5 +1,5 @@
-import React from 'react';
-import PostsList from './components/posts/PostsList';
+import React from 'react'
+import PostsList from './components/posts/PostsList'
 
 const App = () => {
   return (

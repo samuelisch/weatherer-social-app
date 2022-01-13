@@ -1,8 +1,12 @@
 import React from 'react'
+import Button from '../assets/Button'
 
 const Post = ({ id, post }) => {
   return (
-    <li>user: {post.username} content: {post.content}</li>
+    <li>
+      content: {post.content} likes: {post.likes}
+      <Button text="like" handleClick="" />
+    </li>
   )
 }
 

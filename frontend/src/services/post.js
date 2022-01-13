@@ -7,6 +7,12 @@ const getAll = async () => {
   return response.data
 }
 
+const create = async (content) => {
+  const newObj = { content, likes: 0}
+  const response = await axios.post(newObj)
+  return response.data
+}
+
 const postService = {
   getAll
 }
