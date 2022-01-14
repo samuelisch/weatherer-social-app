@@ -1,16 +1,12 @@
 import React from 'react'
 import Button from '../assets/Button'
-import { useDispatch } from 'react-redux'
-import { likePost, deletePost } from '../../reducers/postReducer'
 
-const Post = ({ post }) => {
-  const dispatch = useDispatch()
-
+const Post = ({ post, handleLikePost, handleDeletePost }) => {
   return (
     <li>
       content: {post.content} likes: {post.likes}
-      <Button text="like" handleClick={() => dispatch(likePost(post))} />
-      <Button text="delete" handleClick={() => dispatch(deletePost(post.id))} />
+      <Button text="like" handleClick={handleLikePost} />
+      <Button text="delete" handleClick={handleDeletePost} />
     </li>
   )
 }

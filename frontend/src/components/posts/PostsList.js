@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import Post from './Post'
 import { useSelector, useDispatch } from 'react-redux'
-import { initializePosts } from '../../reducers/postReducer'
+import { initializePosts, likePost, deletePost } from '../../reducers/postReducer'
 
 const PostsList = () => {
   const dispatch = useDispatch()
@@ -11,10 +11,20 @@ const PostsList = () => {
     dispatch(initializePosts())
   }, [dispatch])
 
+  const likePostHandler = async (post) => {
+    await dispatch(likePost(post))
+  }
+
+  const deletePostHandler = async (id) => {
+    await dispatch(deletePost(id))
+  }
+
   const postsToRender = posts.map(post => (
     <Post 
       key={post.id}
       post={post}
+      handleLikePost={() => likePostHandler(post)}
+      handleDeletePost={() => deletePostHandler(post.id)}
     />
   ))
 
