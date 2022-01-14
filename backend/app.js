@@ -55,7 +55,9 @@ app.put('/api/posts/:id', async (request, response) => {
     likes: post.likes
   }
 
-  const resultPost = await Post.findByIdAndUpdate(request.params.id, updatedPost)
+  console.log(updatedPost)
+
+  const resultPost = await Post.findByIdAndUpdate(request.params.id, updatedPost, {new: true})
   response.json(resultPost)
 })
 

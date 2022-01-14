@@ -3,5 +3,5 @@ Content-Type: application/json
 
 {
   "content": "Testing for second post ever",
-  "likes": 1
+  "likes": 10
 }
