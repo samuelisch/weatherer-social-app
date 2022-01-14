@@ -2,24 +2,29 @@ const express = require('express');
 require('dotenv').config();
 const cors = require('cors');
 const mongoose = require('mongoose');
+const middleware = require('./utils/middleware');
+const logger = require('./utils/logger');
 
 const postsRouter = require('./controllers/posts');
 
 const app = express();
 
-console.log(`connecting to mongoDB ${process.env.MONGODB_URI}`)
+logger.info(`connecting to mongoDB ${process.env.MONGODB_URI}`)
 
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => {
-    console.log('connected to MONGODB')
+    logger.info('connected to MONGODB')
   })
   .catch((error) => {
-    console.log('error connecting to MONGODB', error)
+    logger.error('error connecting to MONGODB', error)
   })
 
 app.use(cors());
 app.use(express.json());
+app.use(middleware.requestLogger);
 
 app.use('/api/posts', postsRouter);
+app.use(middleware.unknownEndpoint);
+app.use(middleware.errorHandler);
 
 module.exports = app;
