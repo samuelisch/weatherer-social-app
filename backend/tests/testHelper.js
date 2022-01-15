@@ -2,7 +2,7 @@ const Post = require('../models/post')
 
 const initialPosts = [
   {
-    content: "This post is talking about the weather",
+    content: "test post",
     likes: 10
   },
   {
@@ -24,7 +24,7 @@ const nonExistingId = async () => {
 
 const postsInDb = async () => {
   const posts = await Post.find({})
-  return post.map(post => post.toJSON())
+  return posts.map(post => post.toJSON())
 }
 
 module.exports = {
