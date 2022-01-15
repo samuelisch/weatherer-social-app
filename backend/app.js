@@ -26,11 +26,6 @@ app.use(middleware.requestLogger);
 
 app.use('/api/posts', postsRouter);
 
-if (process.env.NODE_ENV === 'test') {
-  const testingRouter = require('./controllers/testRouter')
-  app.use('api/testing', testingRouter)
-}
-
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);
 
