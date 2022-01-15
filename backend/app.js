@@ -2,6 +2,7 @@ const express = require('express');
 require('dotenv').config();
 const cors = require('cors');
 const mongoose = require('mongoose');
+const config = require('./utils/config');
 const middleware = require('./utils/middleware');
 const logger = require('./utils/logger');
 
@@ -11,7 +12,7 @@ const app = express();
 
 logger.info(`connecting to mongoDB ${process.env.MONGODB_URI}`)
 
-mongoose.connect(process.env.MONGODB_URI)
+mongoose.connect(config.MONGODB_URI)
   .then(() => {
     logger.info('connected to MONGODB')
   })
@@ -24,6 +25,12 @@ app.use(express.json());
 app.use(middleware.requestLogger);
 
 app.use('/api/posts', postsRouter);
+
+if (process.env.NODE_ENV === 'test') {
+  const testingRouter = require('./controllers/testRouter')
+  app.use('api/testing', testingRouter)
+}
+
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);
 
