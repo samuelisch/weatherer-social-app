@@ -2,7 +2,7 @@ const postsRouter = require('express').Router();
 const Post = require('../models/post')
 
 postsRouter.get('/', async (request, response) => {
-  const fetchedPosts= await Post.find({})
+  const fetchedPosts = await Post.find({})
   response.json(fetchedPosts)
 });
 
@@ -36,12 +36,20 @@ postsRouter.put('/:id', async (request, response) => {
   }
 
   const resultPost = await Post.findByIdAndUpdate(request.params.id, updatedPost, {new: true})
-  response.json(resultPost)
+  if (resultPost) {
+    response.json(resultPost)
+  } else {
+    response.status(404).end()
+  }
 })
 
 postsRouter.delete('/:id', async (request, response) => {
-  await Post.findByIdAndRemove(request.params.id)
-  response.status(204).end()
+  const deletedPost = await Post.findByIdAndRemove(request.params.id)
+  if (deletedPost) {
+    response.status(204).end()
+  } else [
+    response.status(404).end()
+  ]
 });
 
 module.exports = postsRouter;

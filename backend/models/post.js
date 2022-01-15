@@ -4,6 +4,7 @@ const postSchema = new mongoose.Schema({
   content: {
     type: String,
     required: true,
+    minlength: 1
   },
   likes: {
     type: Number,
