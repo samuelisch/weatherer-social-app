@@ -13,7 +13,18 @@ const initialPosts = [
   },
 ]
 
-const initialUsers = []
+const initialUsers = [
+  {
+    username: 'root',
+    name: 'superuser',
+    password: 'password'
+  },
+  {
+    username: 'testuser',
+    name: 'testuser',
+    password: 'password'
+  }
+]
 
 const initialComments = [
   {
