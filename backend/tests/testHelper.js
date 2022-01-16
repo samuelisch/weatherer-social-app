@@ -13,17 +13,17 @@ const initialPosts = [
   },
 ]
 
-const initialUsers = []
-
-const initialComments = [
+const initialUsers = [
   {
-    content: 'test comment',
-    likes: 0
+    username: 'root',
+    name: 'superuser',
+    password: 'password'
   },
   {
-    content: 'commenting from user',
-    likes: 1
-  },
+    username: 'testuser',
+    name: 'testuser',
+    password: 'password'
+  }
 ]
 
 const nonExistingPostId = async () => {
@@ -37,17 +37,6 @@ const nonExistingPostId = async () => {
   return post._id.toString()
 }
 
-const nonExistingCommentId = async () => {
-  const comment = new Comment({
-    content: 'toberemoved',
-    likes: 0
-  })
-  await comment.save()
-  await comment.remove()
-
-  return comment._id.toString()
-}
-
 const postsInDb = async () => {
   const posts = await Post.find({})
   return posts.map(post => post.toJSON())
@@ -58,18 +47,10 @@ const usersInDb = async () => {
   return users.map(user => user.toJSON())
 }
 
-const commentsInDb = async () => {
-  const comments = await Comment.find({})
-  return comments.map(comment => comment.toJSON())
-}
-
 module.exports = {
   initialPosts,
   initialUsers,
-  initialComments,
   nonExistingPostId,
-  nonExistingCommentId,
   postsInDb,
   usersInDb,
-  commentsInDb
 }

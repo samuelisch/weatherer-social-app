@@ -10,16 +10,24 @@ const postSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-  user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
-  },
-  comments: [
+  user: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Comment'
+      ref: 'User'
     },
   ],
+  replyToPost: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Post'
+    },
+  ],
+  replies: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Post'
+    },
+  ]
 });
 
 postSchema.set('toJSON', {

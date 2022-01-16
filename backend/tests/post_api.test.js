@@ -3,11 +3,33 @@ const mongoose = require('mongoose')
 const supertest = require('supertest')
 const api = supertest(app)
 const Post = require('../models/post')
+const User = require('../models/user')
 const helper = require('./testHelper')
 
+let token; //JSON web token
+
 beforeEach(async () => {
+  const testUser = {
+    username: 'testuser',
+    password: 'password'
+  }
+
+  await User.deleteMany({})
+  for (let user of helper.initialUsers) {
+    await api
+      .post('/api/users')
+      .send(user)
+  }
+  const loginDetails = await api.post('/api/login').send(testUser)
+  token = loginDetails.body.token
+
   await Post.deleteMany({})
-  await Post.insertMany(helper.initialPosts)
+  for (let post of helper.initialPosts) {
+    await api
+      .post('/api/posts')
+      .set('Authorization', `bearer ${token}`)
+      .send(post)
+  }
 })
 
 describe('when there are initial posts', () => {
@@ -40,6 +62,7 @@ describe('addition of new post', () => {
 
     await api
       .post('/api/posts')
+      .set('Authorization', `bearer ${token}`)
       .send(newPost)
       .expect(200)
       .expect('Content-Type', /application\/json/)
@@ -57,6 +80,7 @@ describe('addition of new post', () => {
 
     await api
       .post('/api/posts')
+      .set('Authorization', `bearer ${token}`)
       .send(newPost)
       .expect(400)
 
@@ -72,6 +96,7 @@ describe('addition of new post', () => {
 
     await api
       .post('/api/posts')
+      .set('Authorization', `bearer ${token}`)
       .send(newPost)
       .expect(400)
 
@@ -86,6 +111,7 @@ describe('addition of new post', () => {
 
     await api
       .post('/api/posts')
+      .set('Authorization', `bearer ${token}`)
       .send(newPost)
       .expect(200)
       .expect('Content-Type', /application\/json/)
@@ -94,6 +120,37 @@ describe('addition of new post', () => {
     expect(postsAtEnd).toHaveLength(helper.initialPosts.length + 1)
     const postContents = postsAtEnd.map(p => p.content)
     expect(postContents).toContain('tester')
+  })
+
+  test('post without token will fail and return 401', async () => {
+    const newPost = {
+      content: 'testpost',
+      likes: 0
+    }
+
+    await api
+      .post('/api/posts')
+      .send(newPost)
+      .expect(401)
+
+    const postsAtEnd = await helper.postsInDb()
+    expect(postsAtEnd).toHaveLength(helper.initialPosts.length)
+  })
+
+  test('post with wrong token will return 401 error', async () => {
+    const newPost = {
+      content: 'testpost',
+      likes: 0
+    }
+
+    await api
+      .post('/api/posts')
+      .set('Authorization', `bearer incorrecttoken`)
+      .send(newPost)
+      .expect(401)
+
+    const postsAtEnd = await helper.postsInDb()
+    expect(postsAtEnd).toHaveLength(helper.initialPosts.length)
   })
 })
 
@@ -178,6 +235,7 @@ describe('deletion of a post', () => {
 
     await api
       .delete(`/api/posts/${postToDelete.id}`)
+      .set('Authorization', `bearer ${token}`)
       .expect(204)
 
     const postsAtEnd = await helper.postsInDb()
@@ -191,6 +249,7 @@ describe('deletion of a post', () => {
 
     await api
       .delete(`/api/posts/${invalidId}`)
+      .set('Authorization', `bearer ${token}`)
       .expect(400)
   })
 
@@ -199,7 +258,33 @@ describe('deletion of a post', () => {
 
     await api
       .delete(`/api/posts/${nonExistingIdPost}`)
+      .set('Authorization', `bearer ${token}`)
       .expect(404)
+  })
+
+  test('delete without token will fail and return 401', async () => {
+    const postsAtStart = await helper.postsInDb()
+    const postToDelete = postsAtStart[0]
+
+    await api
+      .delete(`/api/posts/${postToDelete.id}`)
+      .expect(401)
+
+    const postsAtEnd = await helper.postsInDb()
+    expect(postsAtEnd).toHaveLength(helper.initialPosts.length)
+  })
+
+  test('post with wrong token will return 401 error', async () => {
+    const postsAtStart = await helper.postsInDb()
+    const postToDelete = postsAtStart[0]
+
+    await api
+      .delete(`/api/posts/${postToDelete.id}`)
+      .set('Authorization', `bearer incorrecttoken`)
+      .expect(401)
+
+    const postsAtEnd = await helper.postsInDb()
+    expect(postsAtEnd).toHaveLength(helper.initialPosts.length)
   })
 })
 
