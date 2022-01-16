@@ -9,6 +9,7 @@ const logger = require('./utils/logger');
 
 const postsRouter = require('./controllers/posts');
 const usersRouter = require('./controllers/users');
+const commentsRouter = require('./controllers/comments');
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use(middleware.requestLogger);
 
 app.use('/api/posts', postsRouter);
 app.use('/api/users', usersRouter);
+app.use('/api/comments', commentsRouter);
 
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);

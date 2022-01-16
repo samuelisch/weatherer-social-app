@@ -1,5 +1,6 @@
 const Post = require('../models/post')
-const User = require("../models/user")
+const User = require('../models/user')
+const Comment = require('../models/comment')
 
 const initialPosts = [
   {
@@ -14,7 +15,18 @@ const initialPosts = [
 
 const initialUsers = []
 
-const nonExistingId = async () => {
+const initialComments = [
+  {
+    content: 'test comment',
+    likes: 0
+  },
+  {
+    content: 'commenting from user',
+    likes: 1
+  },
+]
+
+const nonExistingPostId = async () => {
   const post = new Post({
     content: 'to be removed',
     likes: 1
@@ -23,6 +35,17 @@ const nonExistingId = async () => {
   await post.remove()
 
   return post._id.toString()
+}
+
+const nonExistingCommentId = async () => {
+  const comment = new Comment({
+    content: 'toberemoved',
+    likes: 0
+  })
+  await comment.save()
+  await comment.remove()
+
+  return comment._id.toString()
 }
 
 const postsInDb = async () => {
@@ -35,10 +58,18 @@ const usersInDb = async () => {
   return users.map(user => user.toJSON())
 }
 
+const commentsInDb = async () => {
+  const comments = await Comment.find({})
+  return comments.map(comment => comment.toJSON())
+}
+
 module.exports = {
   initialPosts,
   initialUsers,
-  nonExistingId,
+  initialComments,
+  nonExistingPostId,
+  nonExistingCommentId,
   postsInDb,
-  usersInDb
+  usersInDb,
+  commentsInDb
 }

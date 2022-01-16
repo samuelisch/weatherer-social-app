@@ -23,7 +23,13 @@ const userSchema = new mongoose.Schema({
       ref: 'Post'
     }
   ],
-})
+  comments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Comment'
+    },
+  ],
+});
 
 userSchema.set('toJSON', {
   transform: (document, returnedObject) => {
