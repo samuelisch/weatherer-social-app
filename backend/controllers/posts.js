@@ -1,8 +1,14 @@
 const postsRouter = require('express').Router();
 const Post = require('../models/post')
+const User = require('../models/user')
+const userExtractor = require('../utils/middleware').userExtractor;
 
 postsRouter.get('/', async (request, response) => {
-  const fetchedPosts = await Post.find({})
+  const fetchedPosts = await Post
+    .find({})
+    .populate('user', { username: 1, name: 1 })
+    .populate('replyToPost', { content: 1, likes: 1 })
+    .populate('replies', { content: 1, likes: 1 })
   response.json(fetchedPosts)
 });
 
@@ -15,15 +21,20 @@ postsRouter.get('/:id', async (request, response) => {
   }
 });
 
-postsRouter.post('/', async (request, response) => {
+postsRouter.post('/', userExtractor, async (request, response) => {
   const body = request.body;
+  const user = request.user;
 
   const post = new Post({
     content: body.content,
     likes: body.likes ? body.likes : 0,
+    user: user._id
   })
 
   const savedPost = await post.save()
+  user.posts = user.posts.concat(savedPost._id)
+  await User.findByIdAndUpdate(user._id, {posts: user.posts})
+
   response.json(savedPost)
 })
 
@@ -43,13 +54,20 @@ postsRouter.put('/:id', async (request, response) => {
   }
 })
 
-postsRouter.delete('/:id', async (request, response) => {
-  const deletedPost = await Post.findByIdAndRemove(request.params.id)
-  if (deletedPost) {
-    response.status(204).end()
-  } else [
+postsRouter.delete('/:id', userExtractor, async (request, response) => {
+  const user = request.user
+  const post = await Post.findById(request.params.id)
+
+  if (!post) {
     response.status(404).end()
-  ]
+  }
+
+  if (post.user.toString() === user.id.toString()) {
+    await Post.findByIdAndRemove(request.params.id)
+    response.status(204).end()
+  } else {
+    response.status(400).json({ error: 'item not created by user' })
+  }
 });
 
 module.exports = postsRouter;
