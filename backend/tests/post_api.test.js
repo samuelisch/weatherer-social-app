@@ -120,7 +120,7 @@ describe('viewing specific post', () => {
   })
 
   test('fails with code 404 if non exisitng id', async () => {
-    const nonExistingIdPost = await helper.nonExistingId()
+    const nonExistingIdPost = await helper.nonExistingPostId()
 
     await api
       .get(`/api/posts/${nonExistingIdPost}`)
@@ -159,7 +159,7 @@ describe('updating a post', () => {
   })
 
   test('fails with code 404 if non exisitng id', async () => {
-    const nonExistingIdPost = await helper.nonExistingId()
+    const nonExistingIdPost = await helper.nonExistingPostId()
     const updatedPost = {
       likes: 10
     }
@@ -195,7 +195,7 @@ describe('deletion of a post', () => {
   })
 
   test('fails with code 404 if non-existing id', async () => {
-    const nonExistingIdPost = await helper.nonExistingId()
+    const nonExistingIdPost = await helper.nonExistingPostId()
 
     await api
       .delete(`/api/posts/${nonExistingIdPost}`)
