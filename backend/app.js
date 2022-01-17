@@ -6,6 +6,7 @@ require('express-async-errors')
 const config = require('./utils/config');
 const middleware = require('./utils/middleware');
 const logger = require('./utils/logger');
+const helmet = require('helmet')
 
 const postsRouter = require('./controllers/posts');
 const usersRouter = require('./controllers/users');
@@ -23,6 +24,7 @@ mongoose.connect(config.MONGODB_URI)
     logger.error('error connecting to MONGODB', error)
   })
 
+app.use(helmet());
 app.use(middleware.tokenExtractor);
 app.use(cors());
 app.use(express.json());
