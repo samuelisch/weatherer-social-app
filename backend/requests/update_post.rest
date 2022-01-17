@@ -1,7 +1,0 @@
-PUT http://localhost:3001/api/posts/61e0e448f3bbb9d645e31cff
-Content-Type: application/json
-
-{
-  "content": "Testing for second post ever",
-  "likes": 10
-}

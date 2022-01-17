@@ -1,9 +1,0 @@
-POST http://localhost:3001/api/posts
-Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiaWQiOiI2MWUzZjlhOWJjODY3NGNlMDI4NWEzODIiLCJpYXQiOjE2NDIzMzEyNTd9.Rh-AAAJVX49wykP-ZM5DwkgXHFXqhK4-Y3fiZ-yF3FM
-
-{
-  "content" : "Deleted my first post, this is the third one",
-  "likes": 0,
-  "userId": "61e3f9a9bc8674ce0285a382"
-}
