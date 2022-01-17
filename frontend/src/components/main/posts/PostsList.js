@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import Post from './Post'
 import { useSelector, useDispatch } from 'react-redux'
-import { initializePosts, likePost, deletePost } from '../../reducers/postReducer'
+import { initializePosts, likePost, deletePost } from '../../../reducers/postReducer'
 
 const PostsList = () => {
   const dispatch = useDispatch()

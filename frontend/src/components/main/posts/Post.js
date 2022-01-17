@@ -1,5 +1,5 @@
 import React from 'react'
-import Button from '../assets/Button'
+import Button from '../../assets/Button'
 
 const Post = ({ post, handleLikePost, handleDeletePost }) => {
   return (

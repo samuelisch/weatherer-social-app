@@ -1,8 +1,8 @@
 import React from 'react'
-import Input from '../assets/Input'
+import Input from '../../assets/Input'
 import { useDispatch } from 'react-redux'
-import { createPost } from '../../reducers/postReducer'
-import Button from '../assets/Button'
+import { createPost } from '../../../reducers/postReducer'
+import Button from '../../assets/Button'
 
 const PostForm = () => {
   const dispatch = useDispatch()
