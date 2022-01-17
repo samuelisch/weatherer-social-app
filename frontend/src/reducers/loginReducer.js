@@ -1,4 +1,5 @@
-import loginService from "../services/login"
+import loginService from '../services/login'
+import postService from '../services/post'
 
 const loginReducer = (state=null, action) => {
   switch(action.type) {
@@ -18,6 +19,7 @@ export const initializeUser = () => {
     let user = JSON.parse(window.localStorage.getItem('loggedAppUser'))
     if (user) {
       console.log('already logged in')
+      postService.setToken(user.token)
       dispatch({
         type: 'USER_INIT',
         data: user
@@ -30,15 +32,20 @@ export const initializeUser = () => {
 
 export const loginUser = (credentials) => {
   return async dispatch => {
-    let user = await loginService.login(credentials)
-    window.localStorage.setItem(
-      'loggedAppUser', JSON.stringify(user)
-    )
-    console.log('logged in')
-    dispatch({
-      type: 'USER_LOGIN',
-      data: user
-    })
+    try {
+      let user = await loginService.login(credentials)
+      window.localStorage.setItem(
+        'loggedAppUser', JSON.stringify(user)
+      )
+      postService.setToken(user.token)
+      console.log('logged in')
+      dispatch({
+        type: 'USER_LOGIN',
+        data: user
+      })
+    } catch (error) {
+      console.log('wrong username or password', error)
+    }
   }
 }
 
