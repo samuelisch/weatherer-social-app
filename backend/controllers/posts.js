@@ -52,7 +52,8 @@ postsRouter.put('/:id/:action', userExtractor, async (request, response) => {
     if (action === 'like') {
       user.likedPosts = [...user.likedPosts, resultPost._id]
     } else if (action === 'unlike') {
-      user.likedPosts = user.likedPosts.filter(post => post.id !== resultPost_.id)
+      //converts ids to strings, for comparison.
+      user.likedPosts = user.likedPosts.filter(postId => postId.toString() !== resultPost._id.toString())
     }
     await User.findByIdAndUpdate(user._id, {likedPosts: user.likedPosts})
 
