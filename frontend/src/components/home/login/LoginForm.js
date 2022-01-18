@@ -2,9 +2,11 @@ import React from 'react'
 import Input from '../../assets/Input'
 import Button from '../../assets/Button'
 import { useDispatch } from 'react-redux'
-import { loginUser, logoutUser } from '../../../reducers/loginReducer'
+import { loginUser } from '../../../reducers/loginReducer'
+import { useNavigate } from 'react-router-dom'
 
 const LoginForm = () => {
+  const navigate = useNavigate()
   const dispatch = useDispatch()
 
   const loginHandler = async (e) => {
@@ -14,6 +16,7 @@ const LoginForm = () => {
 
     try {
       await dispatch(loginUser({username, password}))
+      navigate('/')
     } catch (error) {
       console.log(error)
     }
@@ -43,7 +46,6 @@ const LoginForm = () => {
           </div>
           <Button type='submit' text='login' />
         </form>
-        <Button type='button' text='logout' handleClick={() => dispatch(logoutUser())} />
       </>
   )
 }
