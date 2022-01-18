@@ -12,6 +12,11 @@ const getAll = async () => {
   return response.data
 }
 
+const getOne = async (id) => {
+  const response = await axios.get(`${url}/${id}`)
+  return response.data
+}
+
 const create = async (content) => {
   const config = {
     headers: { Authorization: token }
@@ -22,8 +27,12 @@ const create = async (content) => {
   return response.data
 }
 
-const update = async (id, newObj) => {
-  const response = await axios.put(`${url}/${id}`, newObj)
+const update = async (id, newObj, action) => {
+  const config = {
+    headers: { Authorization: token }
+  }
+
+  const response = await axios.put(`${url}/${id}/${action}`, newObj, config)
   return response.data
 }
 
@@ -38,6 +47,7 @@ const remove = async (id) => {
 
 const postService = {
   getAll,
+  getOne,
   create,
   setToken,
   update,
