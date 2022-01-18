@@ -38,16 +38,24 @@ postsRouter.post('/', userExtractor, async (request, response) => {
   response.json(savedPost)
 })
 
-postsRouter.put('/:id', async (request, response) => {
+postsRouter.put('/:id/:action', userExtractor, async (request, response) => {
   const post = request.body
+  const user = request.user
+  const action = request.params.action
 
   const updatedPost = {
-    content: post.content,
     likes: post.likes
   }
 
   const resultPost = await Post.findByIdAndUpdate(request.params.id, updatedPost, {new: true})
   if (resultPost) {
+    if (action === 'like') {
+      user.likedPosts = [...user.likedPosts, resultPost._id]
+    } else if (action === 'unlike') {
+      user.likedPosts = user.likedPosts.filter(post => post.id !== resultPost_.id)
+    }
+    await User.findByIdAndUpdate(user._id, {likedPosts: user.likedPosts})
+
     response.json(resultPost)
   } else {
     response.status(404).end()

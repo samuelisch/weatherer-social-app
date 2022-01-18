@@ -6,6 +6,7 @@ usersRouter.get('/', async (request, response) => {
   const fetchedUsers = await User
     .find({})
     .populate('posts', { content: 1, likes: 1 })
+    .populate('likedPosts', { id: 1 })
   response.json(fetchedUsers)
 })
 
