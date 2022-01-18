@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react'
 import Post from './Post'
 import { useSelector, useDispatch } from 'react-redux'
-import { initializePosts, likePost, deletePost } from '../../../reducers/postReducer'
+import { initializePosts, likePost, unlikePost, deletePost } from '../../../reducers/postReducer'
 
 const PostsList = () => {
   const dispatch = useDispatch()
   const posts = useSelector(state => state.posts)
+  const user = useSelector(state => state.login)
 
   useEffect(() => {
     dispatch(initializePosts())
@@ -15,18 +16,26 @@ const PostsList = () => {
     await dispatch(likePost(post))
   }
 
+  const unlikePostHandler = async (post) => {
+    await dispatch(unlikePost(post))
+  }
+
   const deletePostHandler = async (id) => {
     await dispatch(deletePost(id))
   }
 
-  const postsToRender = posts.map(post => (
-    <Post 
-      key={post.id}
-      post={post}
-      handleLikePost={() => likePostHandler(post)}
-      handleDeletePost={() => deletePostHandler(post.id)}
-    />
-  ))
+  const postsToRender = posts.map(post => {
+    return (
+      <Post 
+        key={post.id}
+        post={post}
+        handleLikePost={() => likePostHandler(post)}
+        handleUnlikePost={() => unlikePostHandler(post)}
+        handleDeletePost={() => deletePostHandler(post.id)}
+        userLiked={user.likedPosts.includes(post.id)}
+      />
+    )
+  })
 
   return (
     <ul>

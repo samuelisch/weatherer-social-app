@@ -1,13 +1,40 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Button from '../../assets/Button'
+import styled from 'styled-components'
 
-const Post = ({ post, handleLikePost, handleDeletePost }) => {
+const StyledItem = styled.li`
+  border: 1px solid rgb(85, 85, 85);
+  padding: 10px;
+
+  .postLikeButton {
+    background-color: ${props => props.liked ? 'rgb(173, 226, 230)' : 'rgb(215, 215, 215)'};
+  }
+`
+
+
+const Post = ({ post, handleLikePost, handleUnlikePost, handleDeletePost, userLiked }) => {
+  const [isLiked, setIsLiked] = useState(userLiked)
+
+  const handleLikeButton = () => {
+    if (isLiked) {
+      handleUnlikePost()
+    } else {
+      handleLikePost()
+    }
+    setIsLiked(!isLiked)
+  }
+
   return (
-    <li>
-      content: {post.content} likes: {post.likes}
-      <Button text="like" handleClick={handleLikePost} />
-      <Button text="delete" handleClick={handleDeletePost} />
-    </li>
+    <StyledItem liked={isLiked}>
+      <div>
+        content: {post.content}
+      </div>
+      <div>
+        likes: {post.likes}
+      </div>
+      <Button className="postLikeButton" text="like" handleClick={handleLikeButton} />
+      <Button className="postDeleteButton" text="delete" handleClick={handleDeletePost} />
+    </StyledItem>
   )
 }
 
