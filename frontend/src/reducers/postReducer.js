@@ -42,7 +42,7 @@ export const createPost = (content) => {
 export const likePost = (post) => {
   return async dispatch => {
     const newPost = { ...post, likes: post.likes + 1}
-    const returnedPost = await postService.update(post.id, newPost)
+    const returnedPost = await postService.update(post.id, newPost, 'like')
     dispatch({
       type: 'LIKE_POST',
       data: returnedPost
@@ -53,7 +53,7 @@ export const likePost = (post) => {
 export const unlikePost = (post) => {
   return async dispatch => {
     const newPost = { ...post, likes: post.likes - 1}
-    const returnedPost = await postService.update(post.id, newPost)
+    const returnedPost = await postService.update(post.id, newPost, 'unlike')
     dispatch({
       type: 'LIKE_POST',
       data: returnedPost

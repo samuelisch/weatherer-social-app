@@ -1,9 +1,10 @@
 import loginService from '../services/login'
 import postService from '../services/post'
+import userService from '../services/user'
 
 const loginReducer = (state=null, action) => {
   switch(action.type) {
-    case 'USER_INIT':
+    case 'LOGIN_INIT':
       return action.data
     case 'USER_LOGIN':
       return action.data
@@ -14,18 +15,16 @@ const loginReducer = (state=null, action) => {
   }
 }
 
-export const initializeUser = () => {
-  return dispatch => {
-    let user = JSON.parse(window.localStorage.getItem('loggedAppUser'))
-    if (user) {
-      console.log('already logged in')
-      postService.setToken(user.token)
+export const initializeLogin = () => {
+  return async dispatch => {
+    let userCredentials = JSON.parse(window.localStorage.getItem('loggedAppUser'))
+    if (userCredentials) {
+      postService.setToken(userCredentials.token)
+      const user = await userService.getOne(userCredentials.id)
       dispatch({
-        type: 'USER_INIT',
+        type: 'LOGIN_INIT',
         data: user
       })
-    } else {
-      console.log('not logged in')
     }
   }
 }
@@ -33,12 +32,12 @@ export const initializeUser = () => {
 export const loginUser = (credentials) => {
   return async dispatch => {
     try {
-      let user = await loginService.login(credentials)
+      let userResponse = await loginService.login(credentials)
       window.localStorage.setItem(
-        'loggedAppUser', JSON.stringify(user)
+        'loggedAppUser', JSON.stringify(userResponse)
       )
-      postService.setToken(user.token)
-      console.log('logged in')
+      postService.setToken(userResponse.token)
+      const user = await userService.getOne(userResponse.id)
       dispatch({
         type: 'USER_LOGIN',
         data: user
@@ -52,7 +51,6 @@ export const loginUser = (credentials) => {
 export const logoutUser = () => {
   return dispatch => {
     window.localStorage.removeItem('loggedAppUser')
-    console.log('logged out')
     dispatch({
       type: 'USER_LOGOUT'
     })
