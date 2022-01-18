@@ -186,7 +186,7 @@ describe('viewing specific post', () => {
 })
 
 describe('updating a post', () => {
-  test('succeeds when request is valid', async () => {
+  test('succeeds in liking when request is valid', async () => {
     const postsAtStart = await helper.postsInDb()
     const postToUpdate = postsAtStart[0]
     const updatedPost = {
@@ -194,7 +194,8 @@ describe('updating a post', () => {
     }
 
     await api
-      .put(`/api/posts/${postToUpdate.id}`)
+      .put(`/api/posts/${postToUpdate.id}/like`)
+      .set('Authorization', `bearer ${token}`)
       .send(updatedPost)
       .expect(200)
       .expect('Content-Type', /application\/json/)
@@ -210,7 +211,8 @@ describe('updating a post', () => {
     }
 
     await api
-      .put(`/api/posts/${invalidId}`)
+      .put(`/api/posts/${invalidId}/like`)
+      .set('Authorization', `bearer ${token}`)
       .send(updatedPost)
       .expect(400)
   })
@@ -222,7 +224,8 @@ describe('updating a post', () => {
     }
 
     await api
-      .put(`/api/posts/${nonExistingIdPost}`)
+      .put(`/api/posts/${nonExistingIdPost}/like`)
+      .set('Authorization', `bearer ${token}`)
       .send(updatedPost)
       .expect(404)
   })
