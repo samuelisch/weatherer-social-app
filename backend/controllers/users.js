@@ -5,9 +5,20 @@ const User = require('../models/user');
 usersRouter.get('/', async (request, response) => {
   const fetchedUsers = await User
     .find({})
-    .populate('posts', { content: 1, likes: 1 })
-    .populate('likedPosts', { id: 1 })
+    .populate('posts', { content: 1 })
   response.json(fetchedUsers)
+})
+
+usersRouter.get('/:id', async (request, response) => {
+  const user = await User
+    .findById(request.params.id)
+    .populate('posts', { content: 1, likes: 1 })
+    .populate('likedPosts', { content: 1, id: 1 })
+  if (user) {
+    response.json(user)
+  } else {
+    response.status(404).end()
+  }
 })
 
 usersRouter.post('/', async (request, response) => {
