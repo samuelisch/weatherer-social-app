@@ -13,7 +13,6 @@ usersRouter.get('/:id', async (request, response) => {
   const user = await User
     .findById(request.params.id)
     .populate('posts', { content: 1, likes: 1 })
-    .populate('likedPosts', { content: 1, id: 1 })
   if (user) {
     response.json(user)
   } else {
