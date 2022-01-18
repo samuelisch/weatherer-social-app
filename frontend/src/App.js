@@ -1,16 +1,9 @@
-import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import { initializeUser } from './reducers/loginReducer'
+import React from 'react'
 import Routers from './routers/Routers'
 
 const App = () => {
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    dispatch(initializeUser())
-  }, [dispatch])
-
   return (
+    // Notification component
     <Routers />
   )
 
