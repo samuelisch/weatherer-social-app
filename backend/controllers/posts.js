@@ -43,8 +43,15 @@ postsRouter.put('/:id/:action', userExtractor, async (request, response) => {
   const user = request.user
   const action = request.params.action
 
+  const likedByUsers = action === 'like' 
+  ? [...post.likedBy, user._id] 
+  : action === 'unlike' 
+  ? post.likedBy.filter(userId => userId.toString() !== user._id.toString())
+  : post.likedBy
+
   const updatedPost = {
-    likes: post.likes
+    likes: post.likes,
+    likedBy: likedByUsers
   }
 
   const resultPost = await Post.findByIdAndUpdate(request.params.id, updatedPost, {new: true})
@@ -66,6 +73,8 @@ postsRouter.put('/:id/:action', userExtractor, async (request, response) => {
 postsRouter.delete('/:id', userExtractor, async (request, response) => {
   const user = request.user
   const post = await Post.findById(request.params.id)
+  const likedBy = post.likedBy
+  const removeLikedPost = (user) => user.likedPosts.filter(postId => postId.toString() !== post._id.toString())
 
   if (!post) {
     response.status(404).end()
@@ -73,6 +82,12 @@ postsRouter.delete('/:id', userExtractor, async (request, response) => {
 
   if (post.user.toString() === user.id.toString()) {
     await Post.findByIdAndRemove(request.params.id)
+    likedBy.forEach(async userId => {
+      const userToEdit = await User.findById(userId.toString())
+      updatedLikedPosts = removeLikedPost(userToEdit)
+      await User.findByIdAndUpdate(userId.toString(), {likedPosts: updatedLikedPosts})
+    })
+
     response.status(204).end()
   } else {
     response.status(400).json({ error: 'item not created by user' })
