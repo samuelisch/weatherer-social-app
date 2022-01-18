@@ -186,17 +186,28 @@ describe('viewing specific post', () => {
 })
 
 describe('updating a post', () => {
-  test('succeeds in liking when request is valid', async () => {
+  test('succeeds in liking then unliking when request is valid', async () => {
     const postsAtStart = await helper.postsInDb()
     const postToUpdate = postsAtStart[0]
-    const updatedPost = {
+    const updatedLikePost = {
       likes: 10
+    }
+
+    const updatedUnlikePost = {
+      likes: 9
     }
 
     await api
       .put(`/api/posts/${postToUpdate.id}/like`)
       .set('Authorization', `bearer ${token}`)
-      .send(updatedPost)
+      .send(updatedLikePost)
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
+
+    await api
+      .put(`/api/posts/${postToUpdate.id}/unlike`)
+      .set('Authorization', `bearer ${token}`)
+      .send(updatedUnlikePost)
       .expect(200)
       .expect('Content-Type', /application\/json/)
 
