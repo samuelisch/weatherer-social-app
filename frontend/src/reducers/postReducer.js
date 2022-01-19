@@ -71,4 +71,8 @@ export const deletePost = (id) => {
   }
 }
 
+export const getPostFromId = (postsState, id) => {
+  return postsState.find(post => post.id === id)
+}
+
 export default postReducer
