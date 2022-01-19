@@ -3,6 +3,8 @@ import Home from '../components/home/Home'
 import Main from '../components/main/Main'
 import Login from '../components/home/login/Login'
 import Signup from '../components/home/signup/Signup'
+import User from '../components/main/user/User'
+import Posts from '../components/main/posts/Posts'
 import {
   BrowserRouter,
   Route,
@@ -15,15 +17,19 @@ const Routers = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Home />}>
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
+        </Route>
         <Route path="/main" element={
           <ProtectedRoute>
             <Main />
           </ProtectedRoute>
         }
-        />
+        >
+          <Route index element={<Posts />} />
+          <Route path=":username" element={<User />} />
+        </Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>
