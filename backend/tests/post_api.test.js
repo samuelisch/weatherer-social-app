@@ -7,6 +7,7 @@ const User = require('../models/user')
 const helper = require('./testHelper')
 
 let token; //JSON web token
+let loggedUser;
 
 beforeEach(async () => {
   const testUser = {
@@ -21,6 +22,7 @@ beforeEach(async () => {
       .send(user)
   }
   const loginDetails = await api.post('/api/login').send(testUser)
+  loggedUser = loginDetails
   token = loginDetails.body.token
 
   await Post.deleteMany({})
@@ -190,11 +192,13 @@ describe('updating a post', () => {
     const postsAtStart = await helper.postsInDb()
     const postToUpdate = postsAtStart[0]
     const updatedLikePost = {
-      likes: 10
+      likes: 10,
+      likedBy: []
     }
 
     const updatedUnlikePost = {
-      likes: 9
+      likes: 9,
+      likedBy: []
     }
 
     await api
@@ -218,7 +222,8 @@ describe('updating a post', () => {
   test('fails with code 400 if invalid id', async () => {
     const invalidId = '49fj309f3409n34nf'
     const updatedPost = {
-      likes: 10
+      likes: 10,
+      likedBy: []
     }
 
     await api
@@ -231,7 +236,8 @@ describe('updating a post', () => {
   test('fails with code 404 if non exisitng id', async () => {
     const nonExistingIdPost = await helper.nonExistingPostId()
     const updatedPost = {
-      likes: 10
+      likes: 10,
+      likedBy: []
     }
 
     await api
