@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom'
 
 const ProtectedRoute = ({ children }) => {
   const authenticated = window.localStorage.getItem('loggedAppUser')
-  return authenticated ? children : <Navigate to="/home" />
+  return authenticated ? children : <Navigate to="/" />
 }
 
 export default ProtectedRoute

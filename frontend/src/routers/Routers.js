@@ -1,6 +1,7 @@
 import React from 'react'
 import Home from '../components/home/Home'
 import Main from '../components/main/Main'
+import Login from '../components/home/login/Login'
 import {
   BrowserRouter,
   Route,
@@ -13,13 +14,14 @@ const Routers = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/main" element={
           <ProtectedRoute>
             <Main />
           </ProtectedRoute>
         }
         />
-        <Route path="/home" element={<Home />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>
