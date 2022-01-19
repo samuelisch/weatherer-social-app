@@ -34,4 +34,8 @@ export const createUser = ({username, password, name}) => {
   }
 }
 
+export const selectUserByUsername = (usersState, username) => {
+  return usersState.find(user => user.username === username)
+}
+
 export default userReducer
