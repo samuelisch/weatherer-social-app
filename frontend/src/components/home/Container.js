@@ -6,7 +6,7 @@ const OuterContainer = styled.div`
   position: fixed;
   width: 100%;
   height: 100%;
-  background-color: rgba(91, 112, 131, 0.9);
+  background-color: rgba(91, 112, 131, 0.7);
   display: flex;
   flex-basis: auto;
   justify-content: center;
