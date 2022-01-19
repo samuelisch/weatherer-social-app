@@ -73,25 +73,24 @@ postsRouter.put('/:id/:action', userExtractor, async (request, response) => {
 postsRouter.delete('/:id', userExtractor, async (request, response) => {
   const user = request.user
   const post = await Post.findById(request.params.id)
-  const likedBy = post.likedBy
   const removeLikedPost = (user) => user.likedPosts.filter(postId => postId.toString() !== post._id.toString())
 
   if (!post) {
-    response.status(404).end()
+    return response.status(404).end()
   }
 
-  if (post.user.toString() === user.id.toString()) {
-    await Post.findByIdAndRemove(request.params.id)
-    likedBy.forEach(async userId => {
-      const userToEdit = await User.findById(userId.toString())
-      updatedLikedPosts = removeLikedPost(userToEdit)
-      await User.findByIdAndUpdate(userId.toString(), {likedPosts: updatedLikedPosts})
-    })
-
-    response.status(204).end()
-  } else {
-    response.status(400).json({ error: 'item not created by user' })
+  if (post.user.toString() !== user.id.toString()) {
+    return response.status(400).json({ error: 'item not created by user' }) 
   }
+
+  await Post.findByIdAndRemove(request.params.id)
+  post.likedBy.forEach(async userId => {
+    const userToEdit = await User.findById(userId.toString())
+    const updatedLikedPosts = removeLikedPost(userToEdit)
+    await User.findByIdAndUpdate(userId.toString(), {likedPosts: updatedLikedPosts})
+  })
+
+  response.status(204).end()
 });
 
 module.exports = postsRouter;
