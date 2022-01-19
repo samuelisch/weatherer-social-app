@@ -54,7 +54,11 @@ postsRouter.put('/:id/:action', userExtractor, async (request, response) => {
     likedBy: likedByUsers
   }
 
-  const resultPost = await Post.findByIdAndUpdate(request.params.id, updatedPost, {new: true})
+  const resultPost = await Post
+    .findByIdAndUpdate(request.params.id, updatedPost, {new: true})
+    .populate('user', { username: 1, name: 1 })
+    .populate('replyToPost', { content: 1, likes: 1 })
+    .populate('replies', { content: 1, likes: 1 })
   if (resultPost) {
     if (action === 'like') {
       user.likedPosts = [...user.likedPosts, resultPost._id]
@@ -62,7 +66,9 @@ postsRouter.put('/:id/:action', userExtractor, async (request, response) => {
       //converts ids to strings, for comparison.
       user.likedPosts = user.likedPosts.filter(postId => postId.toString() !== resultPost._id.toString())
     }
-    await User.findByIdAndUpdate(user._id, {likedPosts: user.likedPosts})
+    await User
+      .findByIdAndUpdate(user._id, {likedPosts: user.likedPosts})
+      .populate('posts', { content: 1 })
 
     response.json(resultPost)
   } else {
