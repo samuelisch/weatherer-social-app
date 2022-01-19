@@ -3,7 +3,7 @@ import Post from './Post'
 import { useSelector, useDispatch } from 'react-redux'
 import { initializePosts, likePost, unlikePost, deletePost } from '../../../reducers/postReducer'
 
-const PostsList = () => {
+const PostsList = ({ userId }) => {
   const dispatch = useDispatch()
   const posts = useSelector(state => state.posts)
   const user = useSelector(state => state.login)
@@ -24,7 +24,9 @@ const PostsList = () => {
     await dispatch(deletePost(id))
   }
 
-  const postsToRender = posts.map(post => {
+  const filteredPosts = userId ? posts.filter(post => post.user[0].id === userId) : posts
+
+  const postsToRender = filteredPosts.map(post => {
     return (
       <Post 
         key={post.id}

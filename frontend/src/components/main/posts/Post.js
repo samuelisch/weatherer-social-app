@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Button from '../../assets/Button'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 const StyledItem = styled.li`
   border: 1px solid rgb(85, 85, 85);
@@ -14,6 +15,7 @@ const StyledItem = styled.li`
 
 const Post = ({ post, handleLikePost, handleUnlikePost, handleDeletePost, userLiked }) => {
   const [isLiked, setIsLiked] = useState(userLiked)
+  const postAuthor = post.user[0]
 
   const handleLikeButton = () => {
     if (isLiked) {
@@ -34,6 +36,9 @@ const Post = ({ post, handleLikePost, handleUnlikePost, handleDeletePost, userLi
       </div>
       <Button className="postLikeButton" text="like" handleClick={handleLikeButton} />
       <Button className="postDeleteButton" text="delete" handleClick={handleDeletePost} />
+      <div>
+        by: <Link to={`${postAuthor.username}`}>{postAuthor.username}</Link>
+      </div>
     </StyledItem>
   )
 }
