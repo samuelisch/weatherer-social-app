@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import Button from '../assets/Button'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 
 const StyledHome = styled.div`
   padding-left: 10px;
@@ -34,6 +35,7 @@ const Home = () => {
             handleClick={() => navigate('/login')}
           />
       </StyledHome>
+      <Outlet />
     </div>
   )
 }
