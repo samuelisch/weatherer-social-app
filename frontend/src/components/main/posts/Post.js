@@ -30,8 +30,9 @@ const StyledItem = styled.li`
 `
 
 
-const Post = ({ post, postAuthor, handleLikePost, handleUnlikePost, handleDeletePost, userLiked }) => {
+const Post = ({ post, handleLikePost, handleUnlikePost, handleDeletePost, userLiked }) => {
   const [isLiked, setIsLiked] = useState(userLiked)
+  const postAuthor = post.user[0]
   const navigate = useNavigate()
 
   const handleLikeButton = (e) => {
