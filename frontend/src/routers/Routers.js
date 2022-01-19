@@ -5,6 +5,7 @@ import Login from '../components/home/login/Login'
 import Signup from '../components/home/signup/Signup'
 import User from '../components/main/user/User'
 import Posts from '../components/main/posts/Posts'
+import SinglePostPage from '../components/main/posts/SinglePostPage'
 import {
   BrowserRouter,
   Route,
@@ -29,6 +30,7 @@ const Routers = () => {
         >
           <Route index element={<Posts />} />
           <Route path=":username" element={<User />} />
+          <Route path=":username/:postId" element={<SinglePostPage />} />
         </Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
