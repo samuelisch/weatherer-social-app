@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Button from '../../assets/Button'
 import styled from 'styled-components'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const StyledItem = styled.li`
   border: 1px solid rgb(85, 85, 85);
