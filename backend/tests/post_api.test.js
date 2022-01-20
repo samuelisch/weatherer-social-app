@@ -7,7 +7,6 @@ const User = require('../models/user')
 const helper = require('./testHelper')
 
 let token; //JSON web token
-let loggedUser;
 
 beforeEach(async () => {
   const testUser = {
@@ -153,6 +152,53 @@ describe('addition of new post', () => {
 
     const postsAtEnd = await helper.postsInDb()
     expect(postsAtEnd).toHaveLength(helper.initialPosts.length)
+  })
+})
+
+describe('replying to post', () => {
+  test('reply to post succeeds with correct calls', async () => {
+    const postsAtStart = await helper.postsInDb()
+    const postToReply = postsAtStart[0]
+
+    const newPost = {
+      content: 'replying to post',
+      likes: 0
+    }
+
+    await api
+      .post(`/api/posts/${postToReply.id}`)
+      .set('Authorization', `bearer ${token}`)
+      .send(newPost)
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
+
+    const postsAtEnd = await helper.postsInDb()
+    expect(postsAtEnd).toHaveLength(helper.initialPosts.length + 1)
+    const postRepliedTo = postsAtEnd[0]
+    expect(postRepliedTo.replies).toHaveLength(1)
+  })
+
+  test('a post can be replied to multiple times', async () => {
+    const postsAtStart = await helper.postsInDb()
+    const postToReply = postsAtStart[0]
+
+    const newPost = {
+      content: 'duplicate post',
+      likes: 0
+    }
+
+    for (let i = 0; i < 3; i++) {
+      await api
+        .post(`/api/posts/${postToReply.id}`)
+        .set('Authorization', `bearer ${token}`)
+        .send(newPost)
+    }
+
+    const postsAtEnd = await helper.postsInDb()
+    console.log(postsAtEnd)
+    expect(postsAtEnd).toHaveLength(helper.initialPosts.length + 3)
+    const postRepliedTo = postsAtEnd[0]
+    expect(postRepliedTo.replies).toHaveLength(3)
   })
 })
 
