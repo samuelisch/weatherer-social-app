@@ -6,6 +6,8 @@ const postReducer = (state = [], action) => {
       return action.data
     case 'NEW_POST':
       return [...state, action.data]
+    case 'NEW_REPLY':
+      return [...state, action.data]
     case 'LIKE_POST':
       return state.map(
         post => post.id === action.data.id 
@@ -35,6 +37,16 @@ export const createPost = (content) => {
     dispatch({
       type: 'NEW_POST',
       data: newPost,
+    })
+  }
+}
+
+export const replyPost = (content, replyId) => {
+  return async dispatch => {
+    const newPostReply = await postService.reply(content, replyId)
+    dispatch({
+      type: 'NEW_REPLY',
+      data: newPostReply
     })
   }
 }
