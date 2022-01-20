@@ -10,24 +10,20 @@ const postSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-  user: [
-    {
+  user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
     },
-  ],
   likedBy: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
     }
   ],
-  replyToPost: [
-    {
+  replyToPost: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Post'
     },
-  ],
   replies: [
     {
       type: mongoose.Schema.Types.ObjectId,
