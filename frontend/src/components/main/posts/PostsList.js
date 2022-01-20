@@ -24,7 +24,7 @@ const PostsList = ({ userId }) => {
     await dispatch(deletePost(id))
   }
 
-  const filteredPosts = userId ? posts.filter(post => post.user[0].id === userId) : posts
+  const filteredPosts = userId ? posts.filter(post => post.user.id === userId) : posts
 
   const postsToRender = filteredPosts.map(post => {
     return (
