@@ -1,16 +1,24 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Post from './Post'
 import { useSelector, useDispatch } from 'react-redux'
-import { initializePosts, likePost, unlikePost, deletePost } from '../../../reducers/postReducer'
+import { likePost, unlikePost, deletePost, getPostFromId } from '../../../reducers/postReducer'
 
-const PostsList = ({ userId }) => {
+const PostsList = ({ filter, type }) => {
+  const [filteredPosts, setFilteredPosts] = useState([])
   const dispatch = useDispatch()
   const posts = useSelector(state => state.posts)
   const user = useSelector(state => state.login)
 
   useEffect(() => {
-    dispatch(initializePosts())
-  }, [dispatch])
+    if (type === 'userId') {
+      setFilteredPosts(posts.filter(post => post.user.id === filter))
+    } else if (type === 'replies') {
+      const replyIds = posts.find(post => post.id === filter).replies
+      setFilteredPosts(posts.filter(post => replyIds.includes(post.id)))
+    } else {
+      setFilteredPosts(posts.filter(post => !post.replyToPost))
+    }
+  }, [type, posts, filter])
 
   const likePostHandler = async (post) => {
     await dispatch(likePost(post))
@@ -23,8 +31,6 @@ const PostsList = ({ userId }) => {
   const deletePostHandler = async (id) => {
     await dispatch(deletePost(id))
   }
-
-  const filteredPosts = userId ? posts.filter(post => post.user.id === userId) : posts
 
   const postsToRender = filteredPosts.map(post => {
     return (

@@ -4,6 +4,7 @@ import Button from '../assets/Button'
 import { initializeLogin, logoutUser } from '../../reducers/loginReducer'
 import { useNavigate, Outlet } from 'react-router-dom'
 import { initializeUsers } from '../../reducers/userReducer'
+import { initializePosts } from '../../reducers/postReducer'
 
 const Main = () => {
   const [isLoaded, setIsLoaded] = useState(false)
@@ -22,10 +23,8 @@ const Main = () => {
 
   useEffect(() => {
     dispatch(initializeLogin())
-  }, [dispatch])
-
-  useEffect(() => {
     dispatch(initializeUsers())
+    dispatch(initializePosts())
   }, [dispatch])
 
   const handleLogout = async () => {
@@ -40,7 +39,7 @@ const Main = () => {
             Welcome {user.username}
             <Button type='button' text='logout' handleClick={handleLogout} />
           <Outlet />
-        </div>
+          </div>
         }
       </div>
   )

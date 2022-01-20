@@ -30,7 +30,7 @@ const User = () => {
             : <h1>User not found</h1>
           }
           {user &&
-            <PostsList userId={user.id} />
+            <PostsList filter={user.id} type="userId" />
           }
         </div>
       }

@@ -50,6 +50,11 @@ const Post = ({ post, handleLikePost, handleUnlikePost, handleDeletePost, userLi
     handleDeletePost()
   }
 
+  const handleReplyButton = (e) => {
+    e.stopPropagation()
+    navigate(`/main/${postAuthor.username}/${post.id}/reply`)
+  }
+
   const viewUser = (e) => {
     e.stopPropagation()
     navigate(`/main/${postAuthor.username}`)
@@ -67,8 +72,12 @@ const Post = ({ post, handleLikePost, handleUnlikePost, handleDeletePost, userLi
       <div>
         likes: {post.likes}
       </div>
+      <div>
+        replies: {post.replies.length}
+      </div>
       <Button className="button postLikeButton" text="like" handleClick={handleLikeButton} />
       <Button className="button postDeleteButton" text="delete" handleClick={handleDeleteButton} />
+      <Button className="replyButton" text="reply" handleClick={handleReplyButton} />
       <div>
         by: <span onClick={viewUser}>{postAuthor.username}</span>
       </div>
