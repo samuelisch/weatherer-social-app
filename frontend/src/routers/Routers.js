@@ -5,6 +5,7 @@ import Login from '../components/home/login/Login'
 import Signup from '../components/home/signup/Signup'
 import User from '../components/main/user/User'
 import Posts from '../components/main/posts/Posts'
+import Reply from '../components/main/posts/Reply'
 import SinglePostPage from '../components/main/posts/SinglePostPage'
 import {
   BrowserRouter,
@@ -31,6 +32,7 @@ const Routers = () => {
           <Route index element={<Posts />} />
           <Route path=":username" element={<User />} />
           <Route path=":username/:postId" element={<SinglePostPage />} />
+          <Route path=":username/:postId/reply" element={<Reply />} />
         </Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
