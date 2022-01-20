@@ -27,6 +27,16 @@ const create = async (content) => {
   return response.data
 }
 
+const reply = async (content, id) => {
+  const config = {
+    headers: { Authorization: token }
+  }
+
+  const newObj = { content, likes: 0}
+  const response = await axios.post(`${url}/${id}`, newObj, config)
+  return response.data
+}
+
 const update = async (id, newObj, action) => {
   const config = {
     headers: { Authorization: token }
@@ -49,6 +59,7 @@ const postService = {
   getAll,
   getOne,
   create,
+  reply,
   setToken,
   update,
   remove
