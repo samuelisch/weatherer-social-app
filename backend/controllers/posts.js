@@ -7,8 +7,6 @@ postsRouter.get('/', async (request, response) => {
   const fetchedPosts = await Post
     .find({})
     .populate('user', { username: 1, name: 1 })
-    .populate('replyToPost', { content: 1, likes: 1 })
-    .populate('replies', { content: 1, likes: 1 })
   response.json(fetchedPosts)
 });
 
@@ -38,6 +36,28 @@ postsRouter.post('/', userExtractor, async (request, response) => {
   response.json(savedPost)
 })
 
+postsRouter.post('/:id', userExtractor, async (request,response) => {
+  const body = request.body
+  const user = request.user
+
+  const post = new Post({
+    content: body.content,
+    likes: 0,
+    user: user._id,
+    replyToPost: request.params.id
+  })
+
+  const savedPost = await post.save()
+  user.posts = user.posts.concat(savedPost._id)
+  await User.findByIdAndUpdate(user._id, {posts: user.posts})
+
+  const replyToPost = await Post.findById(request.params.id)
+  replyToPost.replies = replyToPost.replies.concat(savedPost._id)
+  await Post.findByIdAndUpdate(request.params.id, {replies: replyToPost.replies})
+
+  response.json(savedPost)
+})
+
 postsRouter.put('/:id/:action', userExtractor, async (request, response) => {
   const post = request.body
   const user = request.user
@@ -57,8 +77,6 @@ postsRouter.put('/:id/:action', userExtractor, async (request, response) => {
   const resultPost = await Post
     .findByIdAndUpdate(request.params.id, updatedPost, {new: true})
     .populate('user', { username: 1, name: 1 })
-    .populate('replyToPost', { content: 1, likes: 1 })
-    .populate('replies', { content: 1, likes: 1 })
   if (resultPost) {
     if (action === 'like') {
       user.likedPosts = [...user.likedPosts, resultPost._id]
