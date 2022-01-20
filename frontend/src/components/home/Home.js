@@ -3,6 +3,8 @@ import Button from '../assets/Button'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
 import { Outlet } from 'react-router-dom'
+import { initializeUsers } from '../../reducers/userReducer'
+import { useDispatch } from 'react-redux'
 
 const StyledHome = styled.div`
   padding-left: 10px;
@@ -10,6 +12,7 @@ const StyledHome = styled.div`
 `
 
 const Home = () => {
+  const dispatch = useDispatch()
   const navigate = useNavigate()
   const authenticated = window.localStorage.getItem('loggedAppUser')
 
@@ -18,6 +21,10 @@ const Home = () => {
       navigate('/main')
     }
   }, [authenticated, navigate])
+
+  useEffect(() => {
+    dispatch(initializeUsers())
+  })
 
   return (
     <div>

@@ -1,6 +1,6 @@
 import React from 'react'
 import LoginForm from './LoginForm'
-import Container from '../Container'
+import Container from '../../assets/Container'
 
 const Login = () => {
   return (
