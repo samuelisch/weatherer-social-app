@@ -195,7 +195,6 @@ describe('replying to post', () => {
     }
 
     const postsAtEnd = await helper.postsInDb()
-    console.log(postsAtEnd)
     expect(postsAtEnd).toHaveLength(helper.initialPosts.length + 3)
     const postRepliedTo = postsAtEnd[0]
     expect(postRepliedTo.replies).toHaveLength(3)

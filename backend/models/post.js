@@ -11,19 +11,19 @@ const postSchema = new mongoose.Schema({
     default: 0,
   },
   user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
-    },
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
+  replyToPost: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Post'
+  },
   likedBy: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
     }
   ],
-  replyToPost: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Post'
-    },
   replies: [
     {
       type: mongoose.Schema.Types.ObjectId,
