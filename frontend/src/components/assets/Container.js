@@ -53,7 +53,7 @@ const Container = (props) => {
   return (
     <OuterContainer>
       <InnerContainer>
-        <div className="cancel" onClick={() => navigate('/')}></div>
+        <div className="cancel" onClick={() => navigate(-1)}></div>
         {props.children}
       </InnerContainer>
     </OuterContainer>
