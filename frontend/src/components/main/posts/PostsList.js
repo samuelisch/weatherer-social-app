@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Post from './Post'
 import { useSelector, useDispatch } from 'react-redux'
-import { likePost, unlikePost, deletePost, getPostFromId } from '../../../reducers/postReducer'
+import { likePost, unlikePost, deletePost } from '../../../reducers/postReducer'
 
 const PostsList = ({ filter, type }) => {
   const [filteredPosts, setFilteredPosts] = useState([])

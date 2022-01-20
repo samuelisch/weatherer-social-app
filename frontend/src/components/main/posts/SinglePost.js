@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import Button from '../../assets/Button'
-import Input from '../../assets/Input'
 import { useNavigate } from 'react-router-dom'
 
 const SinglePost = ({ post }) => {
