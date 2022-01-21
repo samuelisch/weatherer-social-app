@@ -6,7 +6,6 @@ const userExtractor = require('../utils/middleware').userExtractor;
 postsRouter.get('/', async (request, response) => {
   const fetchedPosts = await Post
     .find({})
-    .populate('user', { username: 1, name: 1 })
   response.json(fetchedPosts)
 });
 
@@ -23,10 +22,16 @@ postsRouter.post('/', userExtractor, async (request, response) => {
   const body = request.body;
   const user = request.user;
 
+  const userDetails = {
+    id: user._id.toString(),
+    username: user.username,
+    name: user.name
+  }
+
   const post = new Post({
     content: body.content,
     likes: body.likes ? body.likes : 0,
-    user: user._id
+    user: userDetails
   })
 
   const savedPost = await post.save()
@@ -40,10 +45,16 @@ postsRouter.post('/:id', userExtractor, async (request,response) => {
   const body = request.body
   const user = request.user
 
+  const userDetails = {
+    id: user._id.toString(),
+    username: user.username,
+    name: user.name
+  }
+
   const post = new Post({
     content: body.content,
     likes: 0,
-    user: user._id,
+    user: userDetails,
     replyToPost: request.params.id
   })
 
@@ -76,7 +87,6 @@ postsRouter.put('/:id/:action', userExtractor, async (request, response) => {
 
   const resultPost = await Post
     .findByIdAndUpdate(request.params.id, updatedPost, {new: true})
-    .populate('user', { username: 1, name: 1 })
   if (resultPost) {
     if (action === 'like') {
       user.likedPosts = [...user.likedPosts, resultPost._id]
@@ -86,7 +96,6 @@ postsRouter.put('/:id/:action', userExtractor, async (request, response) => {
     }
     await User
       .findByIdAndUpdate(user._id, {likedPosts: user.likedPosts})
-      .populate('posts', { content: 1 })
 
     response.json(resultPost)
   } else {
@@ -98,16 +107,23 @@ postsRouter.delete('/:id', userExtractor, async (request, response) => {
   const user = request.user
   const post = await Post.findById(request.params.id)
   const removeLikedPost = (user) => user.likedPosts.filter(postId => postId.toString() !== post._id.toString())
+  const removeReplyFromParent = (parent) => parent.replies.filter(replyId => replyId.toString() !== post._id.toString())
 
   if (!post) {
     return response.status(404).end()
   }
 
-  if (post.user.toString() !== user.id.toString()) {
+  if (post.user.id.toString() !== user.id.toString()) {
     return response.status(400).json({ error: 'item not created by user' }) 
   }
 
   await Post.findByIdAndRemove(request.params.id)
+  if (post.replyToPost) {
+    const parentToEdit = await Post.findById(post.replyToPost.toString())
+    const updatedReplies = removeReplyFromParent(parentToEdit)
+    await Post.findByIdAndUpdate(post.replyToPost.toString(), {replies: updatedReplies})
+  }
+
   post.likedBy.forEach(async userId => {
     const userToEdit = await User.findById(userId.toString())
     const updatedLikedPosts = removeLikedPost(userToEdit)
