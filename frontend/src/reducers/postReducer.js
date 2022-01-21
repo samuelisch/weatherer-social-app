@@ -6,8 +6,15 @@ const postReducer = (state = [], action) => {
       return action.data
     case 'NEW_POST':
       return [...state, action.data]
-    case 'NEW_REPLY':
-      return [...state, action.data]
+    case 'NEW_REPLY': {
+      const parentPost = state.find(post => post.id === action.refId)
+      const updatedReplies = [...parentPost.replies, action.data.id]
+      const updatedParentPost = {...parentPost, replies: updatedReplies}
+      return state.map(post => post.id === parentPost.id
+        ? updatedParentPost
+        : post
+      )
+    }
     case 'LIKE_POST':
       return state.map(
         post => post.id === action.data.id 
@@ -46,6 +53,11 @@ export const replyPost = (content, replyId) => {
     const newPostReply = await postService.reply(content, replyId)
     dispatch({
       type: 'NEW_REPLY',
+      data: newPostReply,
+      refId: replyId
+    })
+    dispatch({
+      type: 'NEW_POST',
       data: newPostReply
     })
   }
