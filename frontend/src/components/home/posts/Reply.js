@@ -29,7 +29,7 @@ const Reply = () => {
     const content = e.target.replyInput.value
     e.target.replyInput.value = ''
     dispatch(replyPost(content, post.id))
-    navigate(`/main/${post.user.username}/${post.id}`)
+    navigate(`/home/${post.id}`)
   }
 
   return (

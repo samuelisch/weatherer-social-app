@@ -1,47 +1,49 @@
-import React, { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import React, { useEffect } from 'react'
 import Button from '../assets/Button'
-import { initializeLogin, logoutUser } from '../../reducers/loginReducer'
-import { useNavigate, Outlet } from 'react-router-dom'
+import styled from 'styled-components'
+import { useNavigate } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 import { initializeUsers } from '../../reducers/userReducer'
-import { initializePosts } from '../../reducers/postReducer'
+import { useDispatch } from 'react-redux'
+
+const StyledMain = styled.div`
+  padding-left: 10px;
+  position: relative;
+`
 
 const Main = () => {
-  const [isLoaded, setIsLoaded] = useState(false)
-  const navigate = useNavigate()
   const dispatch = useDispatch()
-  const users = useSelector(state => state.users)
-  const user = useSelector(state => state.login)
+  const navigate = useNavigate()
+  const authenticated = window.localStorage.getItem('loggedAppUser')
 
   useEffect(() => {
-    if (users && user) {
-      setIsLoaded(true)
-    } else {
-      setIsLoaded(false)
+    if (authenticated) {
+      navigate('/home')
     }
-  }, [users, user])
+  }, [authenticated, navigate])
 
   useEffect(() => {
-    dispatch(initializeLogin())
     dispatch(initializeUsers())
-    dispatch(initializePosts())
-  }, [dispatch])
-
-  const handleLogout = async () => {
-    navigate('/home')
-    await dispatch(logoutUser())
-  }
+  })
 
   return (
-      <div className="main">
-        {isLoaded &&
-          <div>
-            Welcome {user.username}
-            <Button type='button' text='logout' handleClick={handleLogout} />
-          <Outlet />
-          </div>
-        }
-      </div>
+    <div>
+      <StyledMain>
+        <h1>Join Weatherer today.</h1>
+        <Button
+          type="button"
+          text="Sign up"
+          handleClick={() => navigate('/signup')}
+        />
+        <h3>Have an exisitng account?</h3>
+          <Button 
+            type="button"
+            text="Log in"
+            handleClick={() => navigate('/login')}
+          />
+      </StyledMain>
+      <Outlet />
+    </div>
   )
 }
 

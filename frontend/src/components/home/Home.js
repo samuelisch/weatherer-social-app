@@ -1,49 +1,47 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import Button from '../assets/Button'
-import styled from 'styled-components'
-import { useNavigate } from 'react-router-dom'
-import { Outlet } from 'react-router-dom'
+import { initializeLogin, logoutUser } from '../../reducers/loginReducer'
+import { useNavigate, Outlet } from 'react-router-dom'
 import { initializeUsers } from '../../reducers/userReducer'
-import { useDispatch } from 'react-redux'
-
-const StyledHome = styled.div`
-  padding-left: 10px;
-  position: relative;
-`
+import { initializePosts } from '../../reducers/postReducer'
 
 const Home = () => {
-  const dispatch = useDispatch()
+  const [isLoaded, setIsLoaded] = useState(false)
   const navigate = useNavigate()
-  const authenticated = window.localStorage.getItem('loggedAppUser')
+  const dispatch = useDispatch()
+  const users = useSelector(state => state.users)
+  const user = useSelector(state => state.login)
 
   useEffect(() => {
-    if (authenticated) {
-      navigate('/main')
+    if (users && user) {
+      setIsLoaded(true)
+    } else {
+      setIsLoaded(false)
     }
-  }, [authenticated, navigate])
+  }, [users, user])
 
   useEffect(() => {
+    dispatch(initializeLogin())
     dispatch(initializeUsers())
-  })
+    dispatch(initializePosts())
+  }, [dispatch])
+
+  const handleLogout = async () => {
+    navigate('/main')
+    await dispatch(logoutUser())
+  }
 
   return (
-    <div>
-      <StyledHome>
-        <h1>Join Weatherer today.</h1>
-        <Button
-          type="button"
-          text="Sign up"
-          handleClick={() => navigate('/signup')}
-        />
-        <h3>Have an exisitng account?</h3>
-          <Button 
-            type="button"
-            text="Log in"
-            handleClick={() => navigate('/login')}
-          />
-      </StyledHome>
-      <Outlet />
-    </div>
+      <div className="home">
+        {isLoaded &&
+          <div>
+            Welcome {user.username}
+            <Button type='button' text='logout' handleClick={handleLogout} />
+          <Outlet />
+          </div>
+        }
+      </div>
   )
 }
 
