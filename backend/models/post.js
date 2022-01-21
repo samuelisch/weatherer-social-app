@@ -11,8 +11,18 @@ const postSchema = new mongoose.Schema({
     default: 0,
   },
   user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    id: {
+      type: String,
+      required: true,
+    },
+    username: {
+      type: String,
+      required: true,
+    },
+    name: {
+      type: String,
+      required: true,
+    }
   },
   replyToPost: {
     type: mongoose.Schema.Types.ObjectId,
