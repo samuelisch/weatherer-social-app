@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import Container from '../../assets/Container'
 import Button from '../../assets/Button'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { getPostFromId, replyPost } from '../../../reducers/postReducer'
 
@@ -12,6 +12,7 @@ const StyledText = styled.div`
 
 const Reply = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const [isLoaded, setIsLoaded] = useState(false)
   const params = useParams()
   const { postId } = params
@@ -28,6 +29,7 @@ const Reply = () => {
     const content = e.target.replyInput.value
     e.target.replyInput.value = ''
     dispatch(replyPost(content, post.id))
+    navigate(`/main/${post.user.username}/${post.id}`)
   }
 
   return (
