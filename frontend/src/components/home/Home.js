@@ -9,6 +9,7 @@ import styled from 'styled-components'
 
 const StyledHome = styled.div`
   max-width: 1440px;
+  height: 100vh;
   margin: 0 auto;
   display: flex;
 `
@@ -39,7 +40,7 @@ const Home = () => {
 
   return (
       <StyledHome>
-        <Navbar />
+        <Navbar user={user} />
         <StyledContent>
           {isLoaded &&
             <Outlet />

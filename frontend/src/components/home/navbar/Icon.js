@@ -21,10 +21,10 @@ const StyledContainer = styled.div`
   }
 `
 
-const Icon = ({iconType}) => {
+const Icon = ({ iconType, handleNavigate }) => {
   return (
     <StyledIcon>
-        <StyledContainer>
+        <StyledContainer onClick={handleNavigate}>
           <FontAwesomeIcon 
             icon={
               iconType === 'search'
