@@ -18,6 +18,7 @@ const User = () => {
       setLoaded(true)
     }
   }, [user])
+
   return (
     <div>
       {loaded &&
