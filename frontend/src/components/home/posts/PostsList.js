@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from 'react'
+import styled from 'styled-components'
 import Post from './Post'
 import { useSelector, useDispatch } from 'react-redux'
 import { likePost, unlikePost, deletePost } from '../../../reducers/postReducer'
+
+const StyledList = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0;
+`
 
 const PostsList = ({ filter, type }) => {
   const [filteredPosts, setFilteredPosts] = useState([])
@@ -46,9 +53,11 @@ const PostsList = ({ filter, type }) => {
   })
 
   return (
-    <ul>
-      {postsToRender}
-    </ul>
+    <div>
+      <StyledList>
+        {postsToRender}
+      </StyledList>
+    </div>
   )
 }
 
