@@ -30,9 +30,9 @@ const Routers = () => {
         }
         >
           <Route index element={<Posts />} />
-          <Route path=":postId" element={<SinglePostPage />} />
-          <Route path=":postId/reply" element={<Reply />} />
-          <Route path=":username" element={<User />} />
+          <Route path="user/:username" element={<User />} />
+          <Route path="post/:postId" element={<SinglePostPage />} />
+          <Route path="post/:postId/reply" element={<Reply />} />
         </Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

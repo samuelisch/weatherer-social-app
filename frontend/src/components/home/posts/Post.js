@@ -52,16 +52,16 @@ const Post = ({ post, handleLikePost, handleUnlikePost, handleDeletePost, userLi
 
   const handleReplyButton = (e) => {
     e.stopPropagation()
-    navigate(`/home/${post.id}/reply`)
+    navigate(`/home/post/${post.id}/reply`)
   }
 
   const viewUser = (e) => {
     e.stopPropagation()
-    navigate(`/home/${postAuthor.username}`)
+    navigate(`/home/user/${postAuthor.username}`)
   }
 
   const viewPost = () => {
-    navigate(`/home/${post.id}`)
+    navigate(`/home/post/${post.id}`)
   }
 
   return (
