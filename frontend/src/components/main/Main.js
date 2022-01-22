@@ -5,11 +5,16 @@ import { useNavigate } from 'react-router-dom'
 import { Outlet } from 'react-router-dom'
 import { initializeUsers } from '../../reducers/userReducer'
 import { useDispatch } from 'react-redux'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSmog } from '@fortawesome/free-solid-svg-icons'
+
+const StyledContainer = styled.div`
+  padding: 30px 40px;
+  position: relative;
+`
 
 const StyledMain = styled.div`
-  margin-top: 150px;
-  padding-left: 30px;
-  position: relative;
+  margin-top: 120px;
   max-width: 500px;
   background-color: rgb(10, 10, 10);
   color: rgb(225, 225, 225);
@@ -59,6 +64,10 @@ const StyledMain = styled.div`
   }
 `
 
+const StyledIcon = styled.div`
+  position: absolute;
+`
+
 const Main = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -76,33 +85,38 @@ const Main = () => {
 
   return (
     <div>
-      <StyledMain>
-        <h1 className="mainTitle">So, how's the weather?</h1>
-        <h2 className="mainCaption">Join Weatherer today.</h2>
-        <div>
-        <Button
-          className="signupButton"
-          type="button"
-          text="Sign up"
-          handleClick={() => navigate('/signup')}
-        />
-        </div>
-        <div>
-        <Button 
-          className="loginButton"
-          type="button"
-          text="Log in"
-          handleClick={() => navigate('/login')}
-        />
-        </div>
-        <h3 className="testText">Testing the app?</h3>
-        <Button 
-          className="guestLoginButton"
-          type="button"
-          text="Log in as guest"
-          //handleClick={() => navigate('/login')} Handle this with login guest account
-        />
-      </StyledMain>
+      <StyledContainer>
+        <StyledIcon>
+          <FontAwesomeIcon icon={faSmog} size="3x" />
+        </StyledIcon>
+        <StyledMain>
+          <h1 className="mainTitle">So, how's the weather?</h1>
+          <h2 className="mainCaption">Join Weatherer today.</h2>
+          <div>
+          <Button
+            className="signupButton"
+            type="button"
+            text="Sign up"
+            handleClick={() => navigate('/signup')}
+          />
+          </div>
+          <div>
+          <Button 
+            className="loginButton"
+            type="button"
+            text="Log in"
+            handleClick={() => navigate('/login')}
+          />
+          </div>
+          <h3 className="testText">Testing the app?</h3>
+          <Button 
+            className="guestLoginButton"
+            type="button"
+            text="Log in as guest"
+            //handleClick={() => navigate('/login')} Handle this with login guest account
+          />
+        </StyledMain>
+      </StyledContainer>
       <Outlet />
     </div>
   )
