@@ -15,11 +15,11 @@ const GlobalStyle = createGlobalStyle`
 
 const App = () => {
   return (
-    // Notification component
     <div className="content">
       <GlobalStyle />
       <Routers />
     </div>
+    // Notification component after Routers
   )
 
 }
