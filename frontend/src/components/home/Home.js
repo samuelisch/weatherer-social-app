@@ -1,21 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { initializeLogin } from '../../reducers/loginReducer'
-import { Outlet } from 'react-router-dom'
 import { initializeUsers } from '../../reducers/userReducer'
 import { initializePosts } from '../../reducers/postReducer'
 import Navbar from './navbar/Navbar'
 import styled from 'styled-components'
+import Content from './Content'
+import { Outlet } from 'react-router-dom'
 
 const StyledHome = styled.div`
   max-width: 1440px;
   height: 100vh;
   margin: 0 auto;
   display: flex;
-`
-
-const StyledContent = styled.div`
-  flex: 6 1 0;
 `
 
 const Home = () => {
@@ -39,14 +36,15 @@ const Home = () => {
   }, [dispatch])
 
   return (
+    <>
       <StyledHome>
         <Navbar user={user} />
-        <StyledContent>
-          {isLoaded &&
-            <Outlet />
-          }
-        </StyledContent>
+        {isLoaded &&
+          <Content />
+        }
       </StyledHome>
+      <Outlet />
+    </>
   )
 }
 
