@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import styled from 'styled-components'
 import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { getPostFromId } from '../../../reducers/postReducer'
