@@ -10,19 +10,22 @@ const SinglePostPage = () => {
   const params = useParams()
   const { postId } = params
   const post = useSelector(state => getPostFromId(state.posts, postId))
+  const user = useSelector(state => state.login)
 
   useEffect(() => {
-    if (post) {
+    if (post && user) {
       setIsLoaded(true)
     }
-  }, [post])
+  }, [post, user])
 
   return (
     <div>
       {isLoaded && 
         <>
-          <SinglePost post={post} />
-          <hr />
+          <SinglePost 
+            post={post} 
+            user={user}
+          />
           <PostsList filter={post.id} type="replies" />
         </>
       }

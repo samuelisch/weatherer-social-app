@@ -1,22 +1,71 @@
 import React from 'react'
 import styled from 'styled-components'
 import Button from '../../assets/Button'
-import { useNavigate } from 'react-router-dom'
+import PostIcons from './PostIcons'
 
-const SinglePost = ({ post }) => {
-  const navigate = useNavigate()
+const StyledContainer = styled.div`
+  padding: 10px;
+  border: 1px solid rgb(85, 85, 85);
+  border-width: 0 1px;
 
-  const handleReply = () => {
-    navigate('reply')
+  hr {
+    border: none;
+    border-top: 1px solid rgb(85, 85, 85);
+  }
+`
+
+const StyledNameRow = styled.div`
+  display: flex;
+
+  .name {
+    margin-right: 5px;
+    font-size: 1.4rem;
+    font-weight: bold;
   }
 
+  .username {
+    color: rgb(150, 150, 150);
+    font-size: 1.3rem;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  .nameDetails:hover {
+    cursor: pointer;
+  }
+
+  .nameDetails:hover > .name {
+    text-decoration: underline;
+  }
+`
+
+const StyledContent = styled.div`
+  padding: 5px 0 10px;
+  font-size: 1.5rem;
+`
+
+const SinglePost = ({ post, user }) => {
   return (
-    <div>
-      <p>Content: {post.content}</p>
-      <p>Likes: {post.likes}</p>
-      <p>by: {post.user.username}</p>
-      <Button className="replyButton" text="Reply" handleClick={handleReply} />
-    </div>
+    <StyledContainer>
+      <h2>
+        Thread
+      </h2>
+      <StyledNameRow>
+        <div className="nameDetails">
+            <div className="name">{post.user.name}</div>
+            <div className="username">@{post.user.username}</div>
+        </div>
+      </StyledNameRow>
+      <StyledContent>
+        {post.content}
+      </StyledContent>
+      <hr />
+      <PostIcons post={post} user={user} />
+      <hr />
+      <Button className="replyButton" text="Reply" />
+    </StyledContainer>
   )
 }
 

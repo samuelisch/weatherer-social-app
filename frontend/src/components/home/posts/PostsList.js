@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import Post from './Post'
-import { useSelector, useDispatch } from 'react-redux'
-import { likePost, unlikePost, deletePost } from '../../../reducers/postReducer'
+import { useSelector } from 'react-redux'
 
 const StyledList = styled.ul`
   list-style: none;
@@ -12,7 +11,6 @@ const StyledList = styled.ul`
 
 const PostsList = ({ filter, type }) => {
   const [filteredPosts, setFilteredPosts] = useState([])
-  const dispatch = useDispatch()
   const posts = useSelector(state => state.posts)
   const user = useSelector(state => state.login)
 
@@ -27,28 +25,12 @@ const PostsList = ({ filter, type }) => {
     }
   }, [type, posts, filter])
 
-  const likePostHandler = async (post) => {
-    await dispatch(likePost(post))
-  }
-
-  const unlikePostHandler = async (post) => {
-    await dispatch(unlikePost(post))
-  }
-
-  const deletePostHandler = async (id) => {
-    await dispatch(deletePost(id))
-  }
-
   const postsToRender = filteredPosts.map(post => {
     return (
       <Post 
         key={post.id}
         post={post}
-        handleLikePost={() => likePostHandler(post)}
-        handleUnlikePost={() => unlikePostHandler(post)}
-        handleDeletePost={() => deletePostHandler(post.id)}
-        userLiked={user.likedPosts.includes(post.id)}
-        isUserPost={user.id === post.user.id}
+        user={user}
       />
     )
   })
