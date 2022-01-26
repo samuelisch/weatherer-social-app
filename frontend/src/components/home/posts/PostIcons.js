@@ -71,7 +71,7 @@ const PostIcons = ({ post, user }) => {
 
   const handleReply = (e) => {
     e.stopPropagation()
-    navigate('reply')
+    navigate(`/home/reply/${post.id}`)
   }
 
   const handleLikeButton = (e) => {
@@ -91,23 +91,23 @@ const PostIcons = ({ post, user }) => {
 
   return (
     <StyledIconsRow liked={isLiked}>
-        <div className="replyIconContainer iconContainer" onClick={handleReply}>
-          <FontAwesomeIcon className="replyIcon icon" icon={faComment} size='lg' />
-          <span className="iconNum">{post.replies.length > 0 ? post.replies.length : ''}</span>
-        </div>
-        <div className="likeIconContainer iconContainer" onClick={handleLikeButton}>
-          {isLiked
-            ? <FontAwesomeIcon className="likeIcon icon" icon={faHeartSolid} size='lg' />
-            : <FontAwesomeIcon className="likeIcon icon" icon={faHeartRegular} size='lg' />
-          }
-          <span className="likeNum iconNum">{post.likes ? post.likes : ''}</span>
-        </div>
-        <div className="deleteIconContainer iconContainer" onClick={handleDelete}>
-        {isUserPost &&
-          <FontAwesomeIcon className="deleteIcon icon" icon={faTrashAlt} size='lg' />
+      <div className="replyIconContainer iconContainer" onClick={handleReply}>
+        <FontAwesomeIcon className="replyIcon icon" icon={faComment} size='lg' />
+        <span className="iconNum">{post.replies.length > 0 ? post.replies.length : ''}</span>
+      </div>
+      <div className="likeIconContainer iconContainer" onClick={handleLikeButton}>
+        {isLiked
+          ? <FontAwesomeIcon className="likeIcon icon" icon={faHeartSolid} size='lg' />
+          : <FontAwesomeIcon className="likeIcon icon" icon={faHeartRegular} size='lg' />
         }
-        </div>
-      </StyledIconsRow>
+        <span className="likeNum iconNum">{post.likes ? post.likes : ''}</span>
+      </div>
+      <div className="deleteIconContainer iconContainer" onClick={handleDelete}>
+      {isUserPost &&
+        <FontAwesomeIcon className="deleteIcon icon" icon={faTrashAlt} size='lg' />
+      }
+      </div>
+    </StyledIconsRow>
   )
 }
 

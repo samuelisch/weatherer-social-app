@@ -33,8 +33,8 @@ const Navbar = ({ user }) => {
       <StyledNav>
         <Icon iconType="logo" handleNavigate={() => navigate('/home')} />
         <Icon iconType="home" handleNavigate={() => navigate('/home')} />
-        <Icon iconType="search" handleNavigate={() => navigate('/home')} />/
-        <Icon iconType="profile" handleNavigate={() => navigate(`/user/${user.username}`)} />
+        <Icon iconType="search" handleNavigate={() => navigate('/home')} />
+        <Icon iconType="profile" handleNavigate={() => navigate(`user/${user.username}`)} />
         <Icon iconType="weather" />
       </StyledNav>
       <Button type='button' text='logout' handleClick={handleLogout} />
