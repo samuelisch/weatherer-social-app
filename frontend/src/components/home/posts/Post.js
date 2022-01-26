@@ -5,6 +5,7 @@ import PostIcons from './PostIcons'
 
 const StyledItem = styled.li`
   border: 1px solid rgb(85, 85, 85);
+  border-width: 0 1px 1px;
   padding: 10px 15px 5px;
 
   &:hover {

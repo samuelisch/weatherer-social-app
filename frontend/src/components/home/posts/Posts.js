@@ -6,7 +6,7 @@ import styled from 'styled-components'
 const StyledContentTop = styled.div`
   padding: 10px;
   border: 1px solid rgb(85, 85, 85);
-  border-width: 0 1px;
+  border-width: 0 1px 1px;
 
   h2 {
     margin: 0;
