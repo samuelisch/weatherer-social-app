@@ -52,6 +52,7 @@ const StyledIconsRow = styled.div`
   .iconContainer {
     display: flex;
     align-items: center;
+    width: 30px;
   }
 
   .icon {
@@ -151,7 +152,7 @@ const Post = ({ post, handleLikePost, handleUnlikePost, handleDeletePost, userLi
           <span className="likeNum iconNum">{post.likes ? post.likes : ''}</span>
         </div>
         <div className="deleteIconContainer iconContainer" onClick={handleDeleteButton}>
-        {isUserPost && 
+        {isUserPost &&
           <FontAwesomeIcon className="deleteIcon icon" icon={faTrashAlt} size='lg' />
         }
         </div>
