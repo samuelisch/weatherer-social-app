@@ -32,7 +32,7 @@ const Routers = () => {
           <Route index element={<Posts />} />
           <Route path="user/:username" element={<User />} />
           <Route path="post/:postId" element={<SinglePostPage />} />
-          <Route path="post/:postId/reply" element={<Reply />} />
+          <Route path="reply/:postId" element={<Reply />} />
         </Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
