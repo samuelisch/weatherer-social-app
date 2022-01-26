@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons'
-import { faReply } from '@fortawesome/free-solid-svg-icons'
+import { faComment } from '@fortawesome/free-regular-svg-icons'
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
@@ -57,7 +57,8 @@ const StyledIconsRow = styled.div`
   .icon {
     padding: 8px;
     border-radius: 50%;
-    font-size: 1.6rem;
+    font-size: 1.5rem;
+    transition: background-color .2s, color .2s;
   }
 
   .likeIcon {
@@ -87,7 +88,7 @@ const StyledIconsRow = styled.div`
   }
 
   .iconNum {
-    margin-left: 8px;
+    font-size: 1.1rem;
   }
 `
 
@@ -139,7 +140,7 @@ const Post = ({ post, handleLikePost, handleUnlikePost, handleDeletePost, userLi
       </StyledContent>
       <StyledIconsRow liked={isLiked}>
         <div className="replyIconContainer iconContainer" onClick={handleReplyButton}>
-          <FontAwesomeIcon className="replyIcon icon" icon={faReply} size='lg' />
+          <FontAwesomeIcon className="replyIcon icon" icon={faComment} size='lg' />
           <span className="iconNum">{post.replies.length > 0 ? post.replies.length : ''}</span>
         </div>
         <div className="likeIconContainer iconContainer" onClick={handleLikeButton}>
@@ -147,7 +148,7 @@ const Post = ({ post, handleLikePost, handleUnlikePost, handleDeletePost, userLi
             ? <FontAwesomeIcon className="likeIcon icon" icon={faHeartSolid} size='lg' />
             : <FontAwesomeIcon className="likeIcon icon" icon={faHeartRegular} size='lg' />
           }
-          <span className="likeNum iconNum">{post.likes}</span>
+          <span className="likeNum iconNum">{post.likes ? post.likes : ''}</span>
         </div>
         <div className="deleteIconContainer iconContainer" onClick={handleDeleteButton}>
           <FontAwesomeIcon className="deleteIcon icon" icon={faTrashAlt} size='lg' />
