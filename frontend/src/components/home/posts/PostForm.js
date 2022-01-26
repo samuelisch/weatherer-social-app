@@ -75,7 +75,6 @@ const PostForm = () => {
       <StyledTextbox
         className="newPostInput"
         name="content"
-        type="text"
         value={textboxValue}
         handleChange={(e) => setTextboxValue(e.target.value)}
         placeholder="What's happening?"
