@@ -1,10 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
-import Button from '../../assets/Button'
 import PostIcons from './PostIcons'
 import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import ReplyForm from './ReplyForm'
 
 const StyledContainer = styled.div`
   padding: 10px;
@@ -76,6 +76,10 @@ const StyledContent = styled.div`
 const SinglePost = ({ post, user }) => {
   const navigate = useNavigate()
 
+  const viewUser = () => {
+    navigate(`/home/user/${post.user.username}`)
+  }
+
   return (
     <StyledContainer>
       <div className="info">
@@ -83,7 +87,7 @@ const SinglePost = ({ post, user }) => {
         <span className="description">Thread</span>
       </div>
       <StyledNameRow>
-        <div className="nameDetails">
+        <div className="nameDetails" onClick={viewUser}>
             <div className="name">{post.user.name}</div>
             <div className="username">@{post.user.username}</div>
         </div>
@@ -94,7 +98,7 @@ const SinglePost = ({ post, user }) => {
       <hr />
       <PostIcons post={post} user={user} />
       <hr />
-      <Button className="replyButton" text="Reply" />
+      <ReplyForm post={post} />
     </StyledContainer>
   )
 }
