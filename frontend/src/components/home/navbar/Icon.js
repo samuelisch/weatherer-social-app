@@ -14,6 +14,7 @@ const StyledContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: background .2s;
 
   &:hover {
     background: rgba(100, 100, 100, 0.2);
