@@ -1,31 +1,93 @@
 import React, { useState } from 'react'
-import Button from '../../assets/Button'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons'
+import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons'
+import { faReply } from '@fortawesome/free-solid-svg-icons'
+import { faTrashAlt } from '@fortawesome/free-regular-svg-icons'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
 
 const StyledItem = styled.li`
   border: 1px solid rgb(85, 85, 85);
-  padding: 10px;
+  padding: 10px 15px 5px;
 
   &:hover {
     cursor: pointer;
   }
+`
 
-  .postLikeButton {
-    background-color: ${props => props.liked ? 'rgb(173, 226, 230)' : 'rgb(215, 215, 215)'};
+const StyledNameRow = styled.div`
+  display: flex;
+
+  .name {
+    margin-right: 5px;
+    font-size: 1.4rem;
+    font-weight: bold;
   }
 
-  .postLikeButton:hover {
-    background-color: rgb(120, 200, 200);
+  .username {
+    color: rgb(150, 150, 150);
+    font-size: 1.3rem;
+
+    &:hover {
+      text-decoration: none;
+    }
   }
 
-  .button:hover {
-    cursor: pointer;
-  }
-
-  span:hover {
-    cursor: pointer;
+  .nameDetails:hover > .name {
     text-decoration: underline;
+  }
+`
+
+const StyledContent = styled.div`
+  padding: 5px 0 10px;
+  font-size: 1.3rem;
+`
+
+const StyledIconsRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .iconContainer {
+    display: flex;
+    align-items: center;
+  }
+
+  .icon {
+    padding: 8px;
+    border-radius: 50%;
+    font-size: 1.6rem;
+  }
+
+  .likeIcon {
+    color: ${props => props.liked ? 'rgb(245, 80, 80)' : 'rgb(215, 215, 215)'};
+  }
+
+  .likeIconContainer:hover {
+    color: rgb(245, 80, 80);
+
+    .likeIcon {
+      color: rgb(245, 80, 80);
+      background-color: rgba(245, 80, 80, 0.2);
+    }
+  }
+
+  .replyIconContainer:hover {
+    color: rgb(100, 200, 100);
+
+    .replyIcon {
+      color: rgb(100, 200, 100);
+      background-color: rgba(100, 200, 100, 0.2);
+    }
+  }
+
+  .deleteIconContainer:hover .deleteIcon {
+    background-color: rgba(215, 215, 215, 0.2);
+  }
+
+  .iconNum {
+    margin-left: 8px;
   }
 `
 
@@ -65,22 +127,32 @@ const Post = ({ post, handleLikePost, handleUnlikePost, handleDeletePost, userLi
   }
 
   return (
-    <StyledItem liked={isLiked} onClick={viewPost}>
-      <div>
-        content: {post.content}
-      </div>
-      <div>
-        likes: {post.likes}
-      </div>
-      <div>
-        replies: {post.replies.length}
-      </div>
-      <Button className="button postLikeButton" text="like" handleClick={handleLikeButton} />
-      <Button className="button postDeleteButton" text="delete" handleClick={handleDeleteButton} />
-      <Button className="replyButton" text="reply" handleClick={handleReplyButton} />
-      <div>
-        by: <span onClick={viewUser}>{postAuthor.username}</span>
-      </div>
+    <StyledItem onClick={viewPost}>
+      <StyledNameRow>
+        <div className="nameDetails" onClick={viewUser}>
+          <span className="name">{postAuthor.name}</span>
+          <span className="username">@{postAuthor.username}</span>
+        </div>
+      </StyledNameRow>
+      <StyledContent>
+        {post.content}
+      </StyledContent>
+      <StyledIconsRow liked={isLiked}>
+        <div className="replyIconContainer iconContainer" onClick={handleReplyButton}>
+          <FontAwesomeIcon className="replyIcon icon" icon={faReply} size='lg' />
+          <span className="iconNum">{post.replies.length > 0 ? post.replies.length : ''}</span>
+        </div>
+        <div className="likeIconContainer iconContainer" onClick={handleLikeButton}>
+          {isLiked
+            ? <FontAwesomeIcon className="likeIcon icon" icon={faHeartSolid} size='lg' />
+            : <FontAwesomeIcon className="likeIcon icon" icon={faHeartRegular} size='lg' />
+          }
+          <span className="likeNum iconNum">{post.likes}</span>
+        </div>
+        <div className="deleteIconContainer iconContainer" onClick={handleDeleteButton}>
+          <FontAwesomeIcon className="deleteIcon icon" icon={faTrashAlt} size='lg' />
+        </div>
+      </StyledIconsRow>
     </StyledItem>
   )
 }
