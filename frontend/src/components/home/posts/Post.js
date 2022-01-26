@@ -93,7 +93,7 @@ const StyledIconsRow = styled.div`
 `
 
 
-const Post = ({ post, handleLikePost, handleUnlikePost, handleDeletePost, userLiked }) => {
+const Post = ({ post, handleLikePost, handleUnlikePost, handleDeletePost, userLiked, isUserPost }) => {
   const [isLiked, setIsLiked] = useState(userLiked)
   const postAuthor = post.user
   const navigate = useNavigate()
@@ -151,7 +151,9 @@ const Post = ({ post, handleLikePost, handleUnlikePost, handleDeletePost, userLi
           <span className="likeNum iconNum">{post.likes ? post.likes : ''}</span>
         </div>
         <div className="deleteIconContainer iconContainer" onClick={handleDeleteButton}>
+        {isUserPost && 
           <FontAwesomeIcon className="deleteIcon icon" icon={faTrashAlt} size='lg' />
+        }
         </div>
       </StyledIconsRow>
     </StyledItem>

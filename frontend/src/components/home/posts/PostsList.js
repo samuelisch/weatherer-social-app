@@ -48,6 +48,7 @@ const PostsList = ({ filter, type }) => {
         handleUnlikePost={() => unlikePostHandler(post)}
         handleDeletePost={() => deletePostHandler(post.id)}
         userLiked={user.likedPosts.includes(post.id)}
+        isUserPost={user.id === post.user.id}
       />
     )
   })
