@@ -5,7 +5,22 @@ import { faSmog, faHome , faSearch, faUser, faCloudSunRain, faSignOutAlt } from 
 
 const StyledIcon = styled.div`
   padding: 7px;
-  margin: 0 auto;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+
+  .iconText {
+    font-size: 1.7rem;
+    display: none;
+  }
+
+  @media (min-width: 960px) {
+    width: 130px;
+
+    .iconText {
+      display: block;
+    }
+  }
 `
 const StyledContainer = styled.div`
   width: 55px;
@@ -22,7 +37,7 @@ const StyledContainer = styled.div`
   }
 `
 
-const Icon = ({ iconType, handleNavigate }) => {
+const Icon = ({ iconType, text, handleNavigate }) => {
   return (
     <StyledIcon>
         <StyledContainer onClick={handleNavigate}>
@@ -43,6 +58,7 @@ const Icon = ({ iconType, handleNavigate }) => {
             size="2x"
           />
         </StyledContainer>
+        <span className="iconText">{text}</span>
       </StyledIcon>
   )
 }

@@ -31,12 +31,12 @@ const Navbar = ({ user }) => {
     <StyledContainer>
       <StyledNav>
         <Icon iconType="logo" handleNavigate={() => navigate('/home')} />
-        <Icon iconType="home" handleNavigate={() => navigate('/home')} />
-        <Icon iconType="search" handleNavigate={() => navigate('search')} />
-        <Icon iconType="profile" handleNavigate={() => navigate(`user/${user.username}`)} />
-        <Icon iconType="weather" />
+        <Icon iconType="home" text="Home" handleNavigate={() => navigate('/home')} />
+        <Icon iconType="search" text="Search" handleNavigate={() => navigate('search')} />
+        <Icon iconType="profile" text="Profile" handleNavigate={() => navigate(`user/${user.username}`)} />
+        <Icon iconType="weather" text="Weather" />
       </StyledNav>
-      <Icon iconType="logout" handleNavigate={handleLogout} />
+      <Icon iconType="logout" text="Logout" handleNavigate={handleLogout} />
     </StyledContainer>
   )
 }
