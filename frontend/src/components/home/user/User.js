@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { selectUserByUsername } from '../../../reducers/userReducer'
+import styled from 'styled-components'
 import PostsList from '../posts/PostsList'
 import ProfileHeader from './ProfileHeader'
 
