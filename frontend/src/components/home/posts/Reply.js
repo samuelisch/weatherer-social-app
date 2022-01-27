@@ -1,19 +1,36 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import Container from '../../assets/Container'
-import Button from '../../assets/Button'
-import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { replyPost } from '../../../reducers/postReducer'
-import { closeModal } from '../../../reducers/modalReducer'
+import ReplyForm from './ReplyForm'
 
 const StyledText = styled.div`
   color: rgb(245, 245 ,245);
+  width: 80%;
+  margin-top: 20px;
 `
 
+const StyledNameRow = styled.div`
+  display: flex;
+
+  .name {
+    margin-right: 5px;
+    font-size: 1.4rem;
+    font-weight: bold;
+  }
+
+  .username {
+    color: rgb(150, 150, 150);
+    font-size: 1.3rem;
+  }
+`
+
+const StyledContent = styled.div`
+  padding: 5px 0 10px;
+  font-size: 1.3rem;
+`
+
+
 const Reply = ({ post }) => {
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
   const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
@@ -22,32 +39,20 @@ const Reply = ({ post }) => {
     }
   }, [post])
 
-  const handleReply = (e) => {
-    e.preventDefault()
-    const content = e.target.replyInput.value
-    e.target.replyInput.value = ''
-    dispatch(replyPost(content, post.id))
-    dispatch(closeModal())
-    navigate(`/home/post/${post.id}`)
-  }
-
   return (
     <Container type="reply">
       {isLoaded && 
         <StyledText>
-        <p>content: {post.content}</p>
-        <p>likes: {post.likes}</p>
-        <p>by: {post.user.username}</p>
-        <form onSubmit={handleReply}>
-          <div>
-            <textarea
-              id="replyInput"
-              name="replyInput"
-              placeholder="Reply"
-            />
-          </div>
-          <Button type="submit" text="Submit reply" />
-        </form>
+          <StyledNameRow>
+            <div className="nameDetails">
+              <span className="name">{post.user.name}</span>
+              <span className="username">@{post.user.username}</span>
+            </div>
+          </StyledNameRow>
+        <StyledContent>
+          {post.content}
+        </StyledContent>
+        <ReplyForm post={post} modal="true" />
         </StyledText>
       }
     </Container>
