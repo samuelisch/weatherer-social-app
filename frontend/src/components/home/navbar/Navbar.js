@@ -2,7 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
 import Icon from './Icon'
-import Button from '../../assets/Button'
 import { logoutUser } from '../../../reducers/loginReducer'
 import { useDispatch } from 'react-redux'
 
