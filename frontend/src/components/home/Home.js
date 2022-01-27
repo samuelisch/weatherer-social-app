@@ -9,7 +9,7 @@ import Content from './Content'
 import Reply from './posts/Reply'
 
 const StyledHome = styled.div`
-  max-width: 1440px;
+  max-width: 1080px;
   height: 100vh;
   margin: 0 auto;
   display: flex;
