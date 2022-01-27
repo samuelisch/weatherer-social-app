@@ -4,6 +4,7 @@ import Home from '../components/home/Home'
 import User from '../components/home/user/User'
 import Posts from '../components/home/posts/Posts'
 import SinglePostPage from '../components/home/posts/SinglePostPage'
+import Search from '../components/home/search/Search'
 import {
   BrowserRouter,
   Route,
@@ -26,6 +27,7 @@ const Routers = () => {
           <Route index element={<Posts />} />
           <Route path="user/:username" element={<User />} />
           <Route path="post/:postId" element={<SinglePostPage />} />
+          <Route path="search" element={<Search />} />
         </Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

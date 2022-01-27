@@ -26,7 +26,7 @@ const User = () => {
         <div>
           <ProfileHeader user={user} />
           {user &&
-            <PostsList filter={user.id} type="userId" />
+            <PostsList filterKey={user.id} type="userId" />
           }
         </div>
       }

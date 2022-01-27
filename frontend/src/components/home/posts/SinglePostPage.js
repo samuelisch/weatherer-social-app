@@ -26,7 +26,7 @@ const SinglePostPage = () => {
             post={post} 
             user={user}
           />
-          <PostsList filter={post.id} type="replies" />
+          <PostsList filterKey={post.id} type="replies" />
         </>
       }
     </div>

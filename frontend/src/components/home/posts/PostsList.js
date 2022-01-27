@@ -9,21 +9,23 @@ const StyledList = styled.ul`
   margin: 0;
 `
 
-const PostsList = ({ filter, type }) => {
+const PostsList = ({ filterKey, type }) => {
   const [filteredPosts, setFilteredPosts] = useState([])
   const posts = useSelector(state => state.posts)
   const user = useSelector(state => state.login)
 
   useEffect(() => {
     if (type === 'userId') {
-      setFilteredPosts(posts.filter(post => post.user.id === filter))
+      setFilteredPosts(posts.filter(post => post.user.id === filterKey))
     } else if (type === 'replies') {
-      const replyIds = posts.find(post => post.id === filter).replies
+      const replyIds = posts.find(post => post.id === filterKey).replies
       setFilteredPosts(posts.filter(post => replyIds.includes(post.id)))
+    } else if (type === 'search') {
+      setFilteredPosts(posts.filter(post => post.content.includes(filterKey)))
     } else {
       setFilteredPosts(posts.filter(post => !post.replyToPost))
     }
-  }, [type, posts, filter])
+  }, [type, posts, filterKey])
 
   const postsToRender = filteredPosts.map(post => {
     return (
