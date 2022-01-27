@@ -37,7 +37,7 @@ const Navbar = ({ user }) => {
         <Icon iconType="profile" handleNavigate={() => navigate(`user/${user.username}`)} />
         <Icon iconType="weather" />
       </StyledNav>
-      <Button type='button' text='logout' handleClick={handleLogout} />
+      <Icon iconType="logout" handleNavigate={handleLogout} />
     </StyledContainer>
   )
 }

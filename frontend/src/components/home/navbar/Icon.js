@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSmog, faHome , faSearch, faUser, faCloudSunRain } from '@fortawesome/free-solid-svg-icons'
+import { faSmog, faHome , faSearch, faUser, faCloudSunRain, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 
 const StyledIcon = styled.div`
   padding: 7px;
@@ -36,6 +36,8 @@ const Icon = ({ iconType, handleNavigate }) => {
               ? faCloudSunRain
               : iconType === 'home'
               ? faHome
+              : iconType === 'logout'
+              ? faSignOutAlt
               : faSmog
             } 
             size="2x"
