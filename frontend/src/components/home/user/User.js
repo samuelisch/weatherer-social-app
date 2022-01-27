@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import { selectUserByUsername } from '../../../reducers/userReducer'
 import styled from 'styled-components'
 import PostsList from '../posts/PostsList'
+import ProfileHeader from './ProfileHeader'
 
 const User = () => {
   const [loaded, setLoaded] = useState(false)
@@ -23,13 +24,7 @@ const User = () => {
     <div>
       {loaded &&
         <div>
-          {user 
-            ? <>
-                <h2>{user.name}'s profile</h2>
-                <p>{user.username}</p>
-              </>
-            : <h1>User not found</h1>
-          }
+          <ProfileHeader user={user} />
           {user &&
             <PostsList filter={user.id} type="userId" />
           }
