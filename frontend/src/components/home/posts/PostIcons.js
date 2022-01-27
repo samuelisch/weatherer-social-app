@@ -1,13 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { likePost, unlikePost, deletePost } from '../../../reducers/postReducer'
 import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons'
 import { faComment } from '@fortawesome/free-regular-svg-icons'
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons'
 import styled from 'styled-components'
+import { openModal } from '../../../reducers/modalReducer'
 
 const StyledIconsRow = styled.div`
   display: flex;
@@ -64,14 +64,20 @@ const StyledIconsRow = styled.div`
 
 
 const PostIcons = ({ post, user }) => {
-  const [isLiked, setIsLiked] = useState(user.likedPosts.includes(post.id))
+  const [isLiked, setIsLiked] = useState(false)
+  const [isUserPost, setIsUserPost] = useState(false)
   const dispatch = useDispatch()
-  const navigate = useNavigate()
-  const isUserPost = user.id === post.user.id
+
+  useEffect(() => {
+    if (user && post) {
+      setIsLiked(user.likedPosts.includes(post.id))
+      setIsUserPost(user.id === post.user.id)
+    }
+  }, [user, post])
 
   const handleReply = (e) => {
     e.stopPropagation()
-    navigate(`/home/reply/${post.id}`)
+    dispatch(openModal(post))
   }
 
   const handleLikeButton = (e) => {

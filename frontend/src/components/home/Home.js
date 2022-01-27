@@ -6,7 +6,7 @@ import { initializePosts } from '../../reducers/postReducer'
 import Navbar from './navbar/Navbar'
 import styled from 'styled-components'
 import Content from './Content'
-import { Outlet } from 'react-router-dom'
+import Reply from './posts/Reply'
 
 const StyledHome = styled.div`
   max-width: 1440px;
@@ -20,6 +20,7 @@ const Home = () => {
   const dispatch = useDispatch()
   const users = useSelector(state => state.users)
   const user = useSelector(state => state.login)
+  const modal = useSelector(state => state.modal)
 
   useEffect(() => {
     if (users && user) {
@@ -43,7 +44,9 @@ const Home = () => {
           <Content />
         }
       </StyledHome>
-      <Outlet />
+      {modal && 
+        <Reply post={modal} />
+      }
     </>
   )
 }

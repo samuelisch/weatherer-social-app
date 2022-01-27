@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux'
 import { loginUser } from '../../../reducers/loginReducer'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
+import { closeModal } from '../../../reducers/modalReducer'
 
 const StyledContainer = styled.div`
   width: 200px;
@@ -75,6 +76,7 @@ const LoginForm = () => {
 
     try {
       await dispatch(loginUser({username, password}))
+      dispatch(closeModal())
       navigate('/main')
     } catch (error) {
       console.log(error)

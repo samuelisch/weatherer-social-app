@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux'
 import { createUser } from '../../../reducers/userReducer'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
+import { closeModal } from '../../../reducers/modalReducer'
 
 const StyledContainer = styled.div`
   width: 200px;
@@ -67,6 +68,7 @@ const SignupForm = () => {
       await dispatch(createUser(newUser))
       e.target.reset()
       console.log('success')
+      dispatch(closeModal())
       navigate('/login')
     } catch (error) {
       console.log(error)

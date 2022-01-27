@@ -8,7 +8,7 @@ import { replyPost } from '../../../reducers/postReducer'
 
 const StyledForm = styled.form`
   display: flex;
-  align-items: center;
+  align-items: flex-end;
 `
 
 const StyledTextbox = styled(Textbox)`
@@ -61,10 +61,10 @@ const ReplyForm = ({ post, popup }) => {
   const submitHandler = (e) => {
     e.preventDefault()
     const content = textboxValue
-    setTextboxValue('')
+    e.target.replyContent.value = ''
     dispatch(replyPost(content, post.id))
     if (popup) {
-      navigate(`/home/${post.id}`)
+      navigate(`/home/post/${post.id}`)
     }
   }
 

@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { closeModal } from '../../reducers/modalReducer'
 
 const OuterContainer = styled.div`
   position: fixed;
@@ -49,11 +50,12 @@ const InnerContainer = styled.div`
 `
 
 const Container = (props) => {
-  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
   return (
     <OuterContainer>
       <InnerContainer>
-        <div className="cancel" onClick={() => navigate(-1)}></div>
+        <div className="cancel" onClick={() => dispatch(closeModal())}></div>
         {props.children}
       </InnerContainer>
     </OuterContainer>

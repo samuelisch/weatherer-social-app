@@ -2,21 +2,19 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import Container from '../../assets/Container'
 import Button from '../../assets/Button'
-import { useParams, useNavigate } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
-import { getPostFromId, replyPost } from '../../../reducers/postReducer'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { replyPost } from '../../../reducers/postReducer'
+import { closeModal } from '../../../reducers/modalReducer'
 
 const StyledText = styled.div`
   color: rgb(245, 245 ,245);
 `
 
-const Reply = () => {
+const Reply = ({ post }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [isLoaded, setIsLoaded] = useState(false)
-  const params = useParams()
-  const { postId } = params
-  const post = useSelector(state => getPostFromId(state.posts, postId))
 
   useEffect(() => {
     if (post) {
@@ -29,11 +27,12 @@ const Reply = () => {
     const content = e.target.replyInput.value
     e.target.replyInput.value = ''
     dispatch(replyPost(content, post.id))
-    navigate(`/home/${post.id}`)
+    dispatch(closeModal())
+    navigate(`/home/post/${post.id}`)
   }
 
   return (
-    <Container>
+    <Container type="reply">
       {isLoaded && 
         <StyledText>
         <p>content: {post.content}</p>

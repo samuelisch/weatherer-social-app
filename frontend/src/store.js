@@ -4,11 +4,13 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import postReducer from './reducers/postReducer'
 import loginReducer from './reducers/loginReducer'
 import userReducer from './reducers/userReducer'
+import modalReducer from './reducers/modalReducer'
 
 const reducer = combineReducers({
   posts: postReducer,
   login: loginReducer,
-  users: userReducer
+  users: userReducer,
+  modal: modalReducer
 })
 
 const store = createStore(

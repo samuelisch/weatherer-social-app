@@ -2,11 +2,13 @@ import React, { useEffect } from 'react'
 import Button from '../assets/Button'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
-import { Outlet } from 'react-router-dom'
 import { initializeUsers } from '../../reducers/userReducer'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSmog } from '@fortawesome/free-solid-svg-icons'
+import { openModal } from '../../reducers/modalReducer'
+import Signup from './signup/Signup'
+import Login from './login/Login'
 
 const StyledContainer = styled.div`
   padding: 30px 40px;
@@ -72,6 +74,7 @@ const Main = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const authenticated = window.localStorage.getItem('loggedAppUser')
+  const modal = useSelector(state => state.modal)
 
   useEffect(() => {
     if (authenticated) {
@@ -97,7 +100,7 @@ const Main = () => {
             className="signupButton"
             type="button"
             text="Sign up"
-            handleClick={() => navigate('/signup')}
+            handleClick={() => dispatch(openModal('signup'))}
           />
           </div>
           <div>
@@ -105,7 +108,7 @@ const Main = () => {
             className="loginButton"
             type="button"
             text="Log in"
-            handleClick={() => navigate('/login')}
+            handleClick={() => dispatch(openModal('login'))}
           />
           </div>
           <h3 className="testText">Testing the app?</h3>
@@ -117,7 +120,12 @@ const Main = () => {
           />
         </StyledMain>
       </StyledContainer>
-      <Outlet />
+      {modal === 'signup'
+        ? <Signup />
+        : modal === 'login'
+        ? <Login />
+        : ''
+      }
     </div>
   )
 }
