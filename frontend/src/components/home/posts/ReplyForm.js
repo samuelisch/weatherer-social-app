@@ -5,6 +5,7 @@ import Button from '../../assets/Button'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { replyPost } from '../../../reducers/postReducer'
+import { closeModal } from '../../../reducers/modalReducer'
 
 const StyledForm = styled.form`
   display: flex;
@@ -47,7 +48,7 @@ const StyledButton = styled(Button)`
   }
 `
 
-const ReplyForm = ({ post, popup }) => {
+const ReplyForm = ({ post, modal }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [textboxValue, setTextboxValue] = useState('')
@@ -63,7 +64,8 @@ const ReplyForm = ({ post, popup }) => {
     const content = textboxValue
     e.target.replyContent.value = ''
     dispatch(replyPost(content, post.id))
-    if (popup) {
+    dispatch(closeModal())
+    if (modal) {
       navigate(`/home/post/${post.id}`)
     }
   }
