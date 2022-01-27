@@ -25,6 +25,7 @@ mongoose.connect(config.MONGODB_URI)
   })
 
 app.use(helmet());
+app.use(express.static('build'))
 app.use(middleware.tokenExtractor);
 app.use(cors());
 app.use(express.json());

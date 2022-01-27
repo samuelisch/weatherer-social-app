@@ -9,7 +9,11 @@
     "start": "cross-env NODE_ENV=production node index.js",
     "dev": "cross-env NODE_ENV=development nodemon index.js",
     "test": "cross-env NODE_ENV=test jest --verbose --runInBand",
-    "start:test": "cross-env NODE_ENV=test node index.js"
+    "start:test": "cross-env NODE_ENV=test node index.js",
+    "build:ui": "rm -rf build && cd ../frontend/ && yarn run build && cp -r build ../backend",
+    "deploy": "git push heroku master",
+    "deploy:full": "yarn run build:ui && git add . && git commit -m uibuild && git push heroku master && yarn run deploy",
+    "logs:prod": "heroku logs --tail"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
