@@ -25,19 +25,15 @@ mongoose.connect(config.MONGODB_URI)
   })
 
 app.use(helmet());
-app.use(express.static('build'))
-app.use(middleware.tokenExtractor);
 app.use(cors());
+app.use(express.static('build'));
+app.use(middleware.tokenExtractor);
 app.use(express.json());
 app.use(middleware.requestLogger);
 
 app.use('/api/posts', postsRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/login', loginRouter);
-
-app.get('/favicon.ico', (request, response) => {
-  response.sendFile(path.resolve(__dirname, '/build', 'favicon.ico'));
-});
 
 app.get('*', (request, response) => {
   response.sendFile(path.resolve(__dirname+'/build/','index.html'));
