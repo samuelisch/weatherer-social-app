@@ -27,7 +27,10 @@ const PostsList = ({ filterKey, type }) => {
     }
   }, [type, posts, filterKey])
 
-  const postsToRender = filteredPosts.map(post => {
+  // Sort posts in reverse chronological order by datetime string
+  const orderedPosts = filteredPosts.slice().sort((a, b) => b.date.localeCompare(a.date))
+
+  const postsToRender = orderedPosts.map(post => {
     return (
       <Post 
         key={post.id}
