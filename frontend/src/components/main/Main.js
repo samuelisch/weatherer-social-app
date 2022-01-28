@@ -9,6 +9,7 @@ import { faSmog } from '@fortawesome/free-solid-svg-icons'
 import { openModal } from '../../reducers/modalReducer'
 import Signup from './signup/Signup'
 import Login from './login/Login'
+import { loginUser } from '../../reducers/loginReducer'
 
 const StyledContainer = styled.div`
   padding: 30px 40px;
@@ -86,6 +87,11 @@ const Main = () => {
     dispatch(initializeUsers())
   })
 
+  const loginGuestUser = async () => {
+    await dispatch(loginUser({username: 'guestuser', password: 'acktutuopop'}))
+    navigate('/home')
+  }
+
   return (
     <div>
       <StyledContainer>
@@ -116,7 +122,7 @@ const Main = () => {
             className="guestLoginButton"
             type="button"
             text="Log in as guest"
-            //handleClick={() => navigate('/login')} Handle this with login guest account
+            handleClick={loginGuestUser}
           />
         </StyledMain>
       </StyledContainer>

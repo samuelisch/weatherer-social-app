@@ -10,6 +10,8 @@ const loginReducer = (state=null, action) => {
       return action.data
     case 'USER_LOGOUT':
       return null
+    case 'GUEST_LOGIN':
+      return (loginUser(action.data))
     default:
       return state
   }
