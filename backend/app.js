@@ -35,8 +35,12 @@ app.use('/api/posts', postsRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/login', loginRouter);
 
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname+'/build/','index.html'));
+app.get('/favicon.ico', (request, response) => {
+  response.sendFile(path.resolve(__dirname, '/build', 'favicon.ico'));
+});
+
+app.get('*', (request, response) => {
+  response.sendFile(path.resolve(__dirname+'/build/','index.html'));
 });
 
 app.use(middleware.unknownEndpoint);
