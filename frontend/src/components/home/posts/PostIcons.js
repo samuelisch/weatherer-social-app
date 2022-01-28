@@ -20,6 +20,10 @@ const StyledIconsRow = styled.div`
     width: 30px;
   }
 
+  .likeIcon {
+    color: ${props => props.liked ? 'rgb(245, 80, 80)' : 'rgb(215, 215, 215)'};
+  }
+
   .iconContainer:hover {
     cursor: pointer;
   }
@@ -29,10 +33,6 @@ const StyledIconsRow = styled.div`
     border-radius: 50%;
     font-size: 1.5rem;
     transition: background-color .2s, color .2s;
-  }
-
-  .likeIcon {
-    color: ${props => props.liked ? 'rgb(245, 80, 80)' : 'rgb(215, 215, 215)'};
   }
 
   .likeIconContainer:hover {
@@ -75,6 +75,14 @@ const PostIcons = ({ post, user }) => {
     }
   }, [user, post])
 
+  useEffect(() => {
+    if (post.likedBy.includes(user.id)) {
+      setIsLiked(true)
+    } else {
+      setIsLiked(false)
+    }
+  }, [post, user])
+
   const handleReply = (e) => {
     e.stopPropagation()
     dispatch(openModal(post))
@@ -102,10 +110,7 @@ const PostIcons = ({ post, user }) => {
         <span className="iconNum">{post.replies.length > 0 ? post.replies.length : ''}</span>
       </div>
       <div className="likeIconContainer iconContainer" onClick={handleLikeButton}>
-        {isLiked
-          ? <FontAwesomeIcon className="likeIcon icon" icon={faHeartSolid} size='lg' />
-          : <FontAwesomeIcon className="likeIcon icon" icon={faHeartRegular} size='lg' />
-        }
+        <FontAwesomeIcon className="likeIcon icon" icon={isLiked ? faHeartSolid : faHeartRegular} size='lg' />
         <span className="likeNum iconNum">{post.likes ? post.likes : ''}</span>
       </div>
       <div className="deleteIconContainer iconContainer" onClick={handleDelete}>
