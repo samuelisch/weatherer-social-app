@@ -23,7 +23,7 @@ const InnerContainer = styled.div`
   padding: 30px 0;
   flex-direction: column;
   align-items: center;
-  background-color: rgb(15, 15, 15);
+  background: rgb(60, 60, 60);
   border-radius: 10px;
   position: relative;
 
