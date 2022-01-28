@@ -3,16 +3,17 @@ import { parseISO, formatDistanceToNow } from 'date-fns'
 import styled from 'styled-components'
 
 const StyledTime = styled.span`
-  font-size: 1.1rem;
+  font-size: 1.15rem;
+  color: rgb(150, 150, 150);
 `
 
-export const TimeAgo = ({ timestamp }) => {
+const TimeAgo = ({ timestamp }) => {
   const date = parseISO(timestamp)
   const timePeriod = formatDistanceToNow(date)
   const timeAgo = `${timePeriod} ago`
 
   return (
-    <StyledTime title={timestamp}>
+    <StyledTime>
       <i>{timeAgo}</i>
     </StyledTime>
   )
