@@ -5,7 +5,7 @@ import { createGlobalStyle } from 'styled-components'
 const GlobalStyle = createGlobalStyle`
   :root,
   body {
-    background: rgb(10, 10, 10);
+    background: rgb(60, 60, 60);
     font-family: helvetica;
     font-size: 10px;
     margin: 0;
