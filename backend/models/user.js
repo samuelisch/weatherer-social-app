@@ -17,6 +17,10 @@ const userSchema = new mongoose.Schema({
     required: true,
     minLength: [5, 'Minimum password length of 5 required']
   },
+  date: {
+    type: String,
+    required: true
+  },
   posts: [
     {
       type: mongoose.Schema.Types.ObjectId,
