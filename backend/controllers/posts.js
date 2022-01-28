@@ -56,7 +56,8 @@ postsRouter.post('/:id', userExtractor, async (request,response) => {
     content: body.content,
     likes: 0,
     user: userDetails,
-    replyToPost: request.params.id
+    replyToPost: request.params.id,
+    date: new Date().toISOString()
   })
 
   const savedPost = await post.save()
