@@ -35,6 +35,10 @@ app.use('/api/posts', postsRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/login', loginRouter);
 
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname+'/build/','index.html'));
+});
+
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);
 
