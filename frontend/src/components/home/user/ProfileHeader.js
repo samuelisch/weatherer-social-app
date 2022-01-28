@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import MiscDetails from './MiscDetails'
 
 const StyledContainer = styled.div`
   padding: 10px;
@@ -37,11 +38,11 @@ const StyledContainer = styled.div`
 const StyledNameDetails = styled.div`
   .name {
     font-weight: bold;
-    font-size: 1.8rem;
+    font-size: 1.9rem;
   }
 
   .username {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     color: rgb(150, 150, 150);
   }
 `
@@ -65,6 +66,7 @@ const ProfileHeader = ({ user }) => {
         <div className="name">{user.name}</div>
         <div className="username">@{user.username}</div>  
       </StyledNameDetails>
+      <MiscDetails joinedDate={user.date} />
     </StyledContainer>
   )
 }
