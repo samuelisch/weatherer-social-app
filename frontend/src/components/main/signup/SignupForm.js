@@ -25,7 +25,7 @@ const StyledForm = styled.form`
 
   .signupInput {
     width: 95%;
-    background-color: rgb(15, 15, 15);
+    background: inherit;
     color: rgb(245, 245, 245);
     margin-bottom: 10px;
     border-radius: 4px;
@@ -35,15 +35,16 @@ const StyledForm = styled.form`
 
   .signupButton {
     margin-top: 20px;
-    padding: 5px;
+    padding: 10px;
     border-radius: 15px;
-    background-color: rgb(240, 240, 240);
+    border: none;
+    background: rgb(110, 180, 100);
     color: rgb(10, 10, 10);
     font-weight: bold;
   }
 
   .signupButton:hover {
-    background-color: rgb(220, 220, 220);
+    background: rgb(85, 180, 85);
     cursor: pointer;
   }
 `

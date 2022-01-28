@@ -35,21 +35,22 @@ const StyledForm = styled.form`
 
   .loginButton {
     margin-top: 20px;
-    padding: 5px;
+    padding: 10px;
     border-radius: 15px;
-    background-color: rgb(240, 240, 240);
+    border: none;
+    background: rgb(110, 180, 100);
     color: rgb(10, 10, 10);
     font-weight: bold;
   }
 
   .loginButton:hover {
-    background-color: rgb(220, 220, 220);
+    background: rgb(85, 180, 85);
     cursor: pointer;
   }
 `
 
 const StyledText = styled.p`
-  font-size: 1rem;
+  font-size: 1.1rem;
   color: rgb(110, 110, 110);
   display: flex;
   align-items: center;

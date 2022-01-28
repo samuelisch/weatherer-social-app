@@ -19,7 +19,6 @@ const StyledContainer = styled.div`
 const StyledMain = styled.div`
   margin-top: 120px;
   max-width: 500px;
-  background-color: rgb(10, 10, 10);
   color: rgb(225, 225, 225);
 
   .mainTitle {
@@ -57,7 +56,7 @@ const StyledMain = styled.div`
   }
 
   .loginButton {
-    background-color: rgb(10, 10, 10);
+    background-color: transparent;
     color: rgb(110, 180, 100);
     border: 1px solid rgba(205, 225, 205, 0.4);
 
