@@ -2,7 +2,8 @@ import React from 'react'
 import { format, parseISO } from 'date-fns'
 import styled from 'styled-components'
 
-const StyledTime = styled.span`
+const StyledTime = styled.div`
+  padding: 8px 0;
   font-size: 1.3rem;
   color: rgb(150, 150, 150);
 `

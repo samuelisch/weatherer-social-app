@@ -70,7 +70,7 @@ const StyledNameRow = styled.div`
 `
 
 const StyledContent = styled.div`
-  padding: 10px 0 15px;
+  padding: 5px 0;
   font-size: 2rem;
 `
 
