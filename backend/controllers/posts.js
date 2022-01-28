@@ -32,6 +32,7 @@ postsRouter.post('/', userExtractor, async (request, response) => {
     content: body.content,
     likes: body.likes ? body.likes : 0,
     user: userDetails,
+    date: new Date().toISOString()
   })
 
   const savedPost = await post.save()
