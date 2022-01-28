@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
 import PostIcons from './PostIcons'
+import TimeAgo from '../../assets/TimeAgo'
 
 const StyledItem = styled.li`
   border: 1px solid rgb(85, 85, 85);
@@ -15,6 +16,8 @@ const StyledItem = styled.li`
 
 const StyledNameRow = styled.div`
   display: flex;
+  justify-content: space-between;
+  align-items: center;
 
   .name {
     margin-right: 5px;
@@ -61,6 +64,7 @@ const Post = ({ post, user }) => {
           <span className="name">{postAuthor.name}</span>
           <span className="username">@{postAuthor.username}</span>
         </div>
+        <TimeAgo timestamp={post.date} />
       </StyledNameRow>
       <StyledContent>
         {post.content}
