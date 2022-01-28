@@ -31,7 +31,7 @@ postsRouter.post('/', userExtractor, async (request, response) => {
   const post = new Post({
     content: body.content,
     likes: body.likes ? body.likes : 0,
-    user: userDetails
+    user: userDetails,
   })
 
   const savedPost = await post.save()
@@ -120,8 +120,10 @@ postsRouter.delete('/:id', userExtractor, async (request, response) => {
   await Post.findByIdAndRemove(request.params.id)
   if (post.replyToPost) {
     const parentToEdit = await Post.findById(post.replyToPost.toString())
-    const updatedReplies = removeReplyFromParent(parentToEdit)
-    await Post.findByIdAndUpdate(post.replyToPost.toString(), {replies: updatedReplies})
+    if (parentToEdit) {
+      const updatedReplies = removeReplyFromParent(parentToEdit)
+      await Post.findByIdAndUpdate(post.replyToPost.toString(), {replies: updatedReplies})
+    }
   }
 
   post.likedBy.forEach(async userId => {
