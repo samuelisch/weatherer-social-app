@@ -1,6 +1,9 @@
 import React from 'react'
 import Routers from './routers/Routers'
 import { createGlobalStyle } from 'styled-components'
+import { config } from '@fortawesome/fontawesome-svg-core'
+
+config.autoAddCss = false
 
 const GlobalStyle = createGlobalStyle`
   :root,
