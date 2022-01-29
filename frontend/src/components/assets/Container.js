@@ -19,7 +19,7 @@ const OuterContainer = styled.div`
 const InnerContainer = styled.div`
   display: flex;
   width: 80%;
-  max-width: 400px;
+  max-width: 500px;
   padding: 30px 0;
   flex-direction: column;
   align-items: center;
