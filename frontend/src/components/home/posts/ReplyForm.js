@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { replyPost } from '../../../reducers/postReducer'
 import { closeModal } from '../../../reducers/modalReducer'
+import { logoutUser } from '../../../reducers/loginReducer'
 
 const StyledForm = styled.form`
   display: flex;
@@ -59,13 +60,19 @@ const ReplyForm = ({ post, modal }) => {
     textbox.style.height = textbox.scrollHeight + "px"
   }
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault()
-    const content = textboxValue
-    e.target.replyContent.value = ''
-    dispatch(replyPost(content, post.id))
-    dispatch(closeModal())
+    try {
+      const content = textboxValue
+      await dispatch(replyPost(content, post.id))
+      e.target.replyContent.value = ''
+    } catch (error) {
+      navigate('/')
+      await dispatch (logoutUser())
+      console.log('notify user')
+    }
     if (modal) {
+      await dispatch(closeModal())
       navigate(`/home/post/${post.id}`)
     }
   }

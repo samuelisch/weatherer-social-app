@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import Textbox from '../../assets/Textbox'
 import { useDispatch } from 'react-redux'
 import { createPost } from '../../../reducers/postReducer'
 import Button from '../../assets/Button'
 import { closeModal } from '../../../reducers/modalReducer'
+import { logoutUser } from '../../../reducers/loginReducer'
+import { useNavigate } from 'react-router-dom'
 
 const StyledForm = styled.form`
   width: 100%;
@@ -41,6 +43,7 @@ const StyledButton = styled(Button)`
   color: rgb(230, 230, 230);
 
   &:hover {
+    cursor: pointer;
     background-color: rgba(90, 190, 90);
   }
 
@@ -55,7 +58,17 @@ const StyledButton = styled(Button)`
 
 const PostForm = ({ modal }) => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const [textboxValue, setTextboxValue] = useState('')
+  const [buttonDisabled, setButtonDisabled] = useState(true)
+
+  useEffect(() => {
+    if (textboxValue) {
+      setButtonDisabled(false)
+    } else {
+      setButtonDisabled(true)
+    }
+  }, [textboxValue])
 
   //text input height change to fit content solution taken from link: https://stackoverflow.com/a/48460773
   //manipulates height by adding scroll height
@@ -65,11 +78,19 @@ const PostForm = ({ modal }) => {
     textbox.style.height = textbox.scrollHeight + "px"
   }
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault()
-    const content = e.target.content.value
-    e.target.content.value = ''
-    dispatch(createPost(content))
+    try {
+      const content = e.target.content.value
+      await dispatch(createPost(content))
+      setTextboxValue('')
+      e.target.content.value = ''
+      setButtonDisabled(true)
+    } catch (error) {
+      navigate('/')
+      await dispatch (logoutUser())
+      console.log('notify user')
+    }
     if (modal) {
       dispatch(closeModal())
     }
@@ -91,7 +112,7 @@ const PostForm = ({ modal }) => {
           className="newPostButton"
           type="submit"
           text="Create"
-          disabled={!textboxValue}
+          disabled={buttonDisabled}
         />
       </StyledContainer>
     </StyledForm>

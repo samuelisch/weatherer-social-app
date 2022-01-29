@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { likePost, unlikePost, deletePost } from '../../../reducers/postReducer'
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { logoutUser } from '../../../reducers/loginReducer'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons'
@@ -67,6 +69,7 @@ const PostIcons = ({ post, user }) => {
   const [isLiked, setIsLiked] = useState(false)
   const [isUserPost, setIsUserPost] = useState(false)
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (user && post) {
@@ -83,24 +86,39 @@ const PostIcons = ({ post, user }) => {
     }
   }, [post, user])
 
-  const handleReply = (e) => {
-    e.stopPropagation()
-    dispatch(openModalReply(post))
+  const handleErrorAuth = async () => {
+    navigate('/')
+    await dispatch (logoutUser())
+    console.log('notify user')
   }
 
-  const handleLikeButton = (e) => {
+  const handleReply = async (e) => {
     e.stopPropagation()
-    if (isLiked) {
-      dispatch(unlikePost(post))
-    } else {
-      dispatch(likePost(post))
+    await dispatch(openModalReply(post))
+  }
+
+  const handleLikeButton = async (e) => {
+    e.stopPropagation()
+    try {
+      if (isLiked) {
+        await dispatch(unlikePost(post))
+      } else {
+        await dispatch(likePost(post))
+      }
+      setIsLiked(!isLiked)
+    } catch (error) {
+        handleErrorAuth()
     }
-    setIsLiked(!isLiked)
   }
 
-  const handleDelete = (e) => {
+  const handleDelete = async (e) => {
     e.stopPropagation()
-    dispatch(deletePost(post.id))
+    try {
+      await dispatch(deletePost(post.id))
+    } catch (error) {
+      handleErrorAuth()
+    }
+    
   }
 
   return (
