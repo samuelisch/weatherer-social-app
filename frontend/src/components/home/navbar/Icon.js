@@ -6,7 +6,6 @@ import { faSmog, faHome , faSearch, faUser, faCloudSunRain, faSignOutAlt, faPlus
 const StyledIcon = styled.div`
   padding: 7px;
   display: flex;
-  justify-content: start;
   align-items: center;
 
   .iconText {
@@ -15,7 +14,8 @@ const StyledIcon = styled.div`
   }
 
   @media (min-width: 960px) {
-    width: 130px;
+    padding: 7px 0;
+    width: 140px;
 
     .iconText {
       display: block;
@@ -23,7 +23,7 @@ const StyledIcon = styled.div`
   }
 `
 const StyledContainer = styled.div`
-  background: ${props => props.addIcon ? 'rgb(100, 220, 100)' : 'inherit'};
+  background: ${props => props.addIcon ? 'rgba(90, 200, 90)' : 'inherit'};
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -33,8 +33,24 @@ const StyledContainer = styled.div`
   transition: background .2s;
 
   &:hover {
-    background: ${props => props.addIcon ? 'rgb(80, 180, 80)' : 'rgba(100, 100, 100, 0.2)'};
+    background: ${props => props.addIcon ? 'rgb(90, 190, 90)' : 'rgba(100, 100, 100, 0.2)'};
     cursor: pointer;
+  }
+
+  @media (min-width: 960px) {
+    width: 120px;
+    border-radius: 20px;
+    justify-content: left;
+    
+    .icon {
+      padding: 10px;
+      ${props => props.addIcon? 'display: none' : ''};
+    }
+
+    .iconText {
+      width: 100%;
+      text-align: center;
+    }
   }
 `
 
@@ -43,6 +59,7 @@ const Icon = ({ iconType, text, handleNavigate }) => {
     <StyledIcon>
         <StyledContainer onClick={handleNavigate} addIcon={iconType==="add"}>
           <FontAwesomeIcon 
+            className="icon"
             icon={
               iconType === 'search'
               ? faSearch
@@ -60,8 +77,8 @@ const Icon = ({ iconType, text, handleNavigate }) => {
             } 
             size="2x"
           />
+          <span className="iconText">{text}</span>
         </StyledContainer>
-        <span className="iconText">{text}</span>
       </StyledIcon>
   )
 }
