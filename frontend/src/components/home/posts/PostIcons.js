@@ -7,7 +7,7 @@ import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons'
 import { faComment } from '@fortawesome/free-regular-svg-icons'
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons'
 import styled from 'styled-components'
-import { openModal } from '../../../reducers/modalReducer'
+import { openModalReply } from '../../../reducers/modalReducer'
 
 const StyledIconsRow = styled.div`
   display: flex;
@@ -85,7 +85,7 @@ const PostIcons = ({ post, user }) => {
 
   const handleReply = (e) => {
     e.stopPropagation()
-    dispatch(openModal(post))
+    dispatch(openModalReply(post))
   }
 
   const handleLikeButton = (e) => {

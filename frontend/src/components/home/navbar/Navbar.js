@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import Icon from './Icon'
 import { logoutUser } from '../../../reducers/loginReducer'
 import { useDispatch } from 'react-redux'
+import { openModal } from '../../../reducers/modalReducer'
 
 const StyledContainer = styled.div`
   padding-bottom: 40px;
@@ -35,7 +36,7 @@ const Navbar = ({ user }) => {
         <Icon iconType="search" text="Search" handleNavigate={() => navigate('search')} />
         <Icon iconType="profile" text="Profile" handleNavigate={() => navigate(`user/${user.username}`)} />
         <Icon iconType="weather" text="Weather" handleNavigate={() => console.log('weather')} />
-        <Icon iconType="add" text="New post" handleNavigate={() => console.log('add')} />
+        <Icon iconType="add" text="New post" handleNavigate={() => dispatch(openModal('add'))} />
       </StyledNav>
       <Icon iconType="logout" text="Logout" handleNavigate={handleLogout} />
     </StyledContainer>

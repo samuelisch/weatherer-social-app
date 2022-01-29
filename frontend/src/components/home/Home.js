@@ -6,7 +6,7 @@ import { initializePosts } from '../../reducers/postReducer'
 import Navbar from './navbar/Navbar'
 import styled from 'styled-components'
 import Content from './Content'
-import Reply from './posts/Reply'
+import Modal from './posts/Modal'
 
 const StyledHome = styled.div`
   max-width: 720px;
@@ -49,7 +49,7 @@ const Home = () => {
         }
       </StyledHome>
       {modal && 
-        <Reply post={modal} />
+        <Modal modal={modal} />
       }
     </>
   )

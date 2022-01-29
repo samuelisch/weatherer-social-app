@@ -4,14 +4,16 @@ import Textbox from '../../assets/Textbox'
 import { useDispatch } from 'react-redux'
 import { createPost } from '../../../reducers/postReducer'
 import Button from '../../assets/Button'
+import { closeModal } from '../../../reducers/modalReducer'
 
 const StyledForm = styled.form`
+  width: 100%;
   display: flex;
   flex-direction: column;
 `
 
 const StyledTextbox = styled(Textbox)`
-  margin: 20px 0 10px;
+  margin: ${props => props.modal ? '10px 30px 0' : '20px 0 10px'};
   background: transparent;
   border: none;
   font-family: Helvetica;
@@ -51,7 +53,7 @@ const StyledButton = styled(Button)`
   }
 `
 
-const PostForm = () => {
+const PostForm = ({ modal }) => {
   const dispatch = useDispatch()
   const [textboxValue, setTextboxValue] = useState('')
 
@@ -68,11 +70,15 @@ const PostForm = () => {
     const content = e.target.content.value
     e.target.content.value = ''
     dispatch(createPost(content))
+    if (modal) {
+      dispatch(closeModal())
+    }
   }
 
   return(
     <StyledForm onSubmit={submitHandler}>
       <StyledTextbox
+        modal={modal}
         className="newPostInput"
         name="content"
         value={textboxValue}

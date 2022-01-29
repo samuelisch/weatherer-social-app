@@ -2,6 +2,8 @@ const modalReducer = (state=null, action) => {
   switch(action.type) {
     case 'OPEN_MODAL':
       return action.data
+    case 'MODAL_REPLY':
+      return action.data
     case 'CLOSE_MODAL':
       return action.data
     default:
@@ -9,11 +11,20 @@ const modalReducer = (state=null, action) => {
   }
 }
 
-export const openModal = (post) => {
+export const openModal = (type) => {
   return dispatch => {
     dispatch({
       type: 'OPEN_MODAL',
-      data: post
+      data: { type }
+    })
+  }
+}
+
+export const openModalReply = (post) => {
+  return dispatch => {
+    dispatch({
+      type: 'MODAL_REPLY',
+      data: { post, type: "reply"}
     })
   }
 }
