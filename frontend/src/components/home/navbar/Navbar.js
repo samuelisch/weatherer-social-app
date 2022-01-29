@@ -34,7 +34,8 @@ const Navbar = ({ user }) => {
         <Icon iconType="home" text="Home" handleNavigate={() => navigate('/home')} />
         <Icon iconType="search" text="Search" handleNavigate={() => navigate('search')} />
         <Icon iconType="profile" text="Profile" handleNavigate={() => navigate(`user/${user.username}`)} />
-        <Icon iconType="weather" text="Weather" />
+        <Icon iconType="weather" text="Weather" handleNavigate={() => console.log('weather')} />
+        <Icon iconType="add" handleNavigate={() => console.log('add')} />
       </StyledNav>
       <Icon iconType="logout" text="Logout" handleNavigate={handleLogout} />
     </StyledContainer>
