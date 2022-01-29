@@ -6,7 +6,7 @@ import { logoutUser } from '../../../reducers/loginReducer'
 import { useDispatch } from 'react-redux'
 
 const StyledContainer = styled.div`
-  padding-bottom: 20px;
+  padding-bottom: 40px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
