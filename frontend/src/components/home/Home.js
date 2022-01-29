@@ -43,9 +43,11 @@ const Home = () => {
   return (
     <>
       <StyledHome>
-        <Navbar user={user} />
         {isLoaded &&
+        <>
+          <Navbar user={user} />
           <Content />
+        </>
         }
       </StyledHome>
       {modal && 
