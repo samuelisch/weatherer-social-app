@@ -67,7 +67,6 @@ export const likePost = (post) => {
   return async dispatch => {
     const newPost = { ...post, likes: post.likes + 1}
     const returnedPost = await postService.update(post.id, newPost, 'like')
-    console.log('liking post server')
     dispatch({
       type: 'LIKE_POST',
       data: returnedPost

@@ -22,12 +22,27 @@ const Routers = () => {
           <ProtectedRoute>
             <Home />
           </ProtectedRoute>
-        }
-        >
-          <Route index element={<Posts />} />
-          <Route path="user/:username" element={<User />} />
-          <Route path="post/:postId" element={<SinglePostPage />} />
-          <Route path="search" element={<Search />} />
+        }>
+          <Route index element={
+            <ProtectedRoute>
+              <Posts />
+            </ProtectedRoute>
+          } />
+          <Route path="user/:username" element={
+            <ProtectedRoute>
+              <User />
+            </ProtectedRoute>
+          } />
+          <Route path="post/:postId" element={
+            <ProtectedRoute>
+              <SinglePostPage />
+            </ProtectedRoute>
+          } />
+          <Route path="search" element={
+            <ProtectedRoute>
+              <Search />
+            </ProtectedRoute>
+          } />
         </Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
