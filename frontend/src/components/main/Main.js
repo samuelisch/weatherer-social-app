@@ -125,9 +125,9 @@ const Main = () => {
           />
         </StyledMain>
       </StyledContainer>
-      {modal === 'signup'
+      {modal && modal.type === 'signup'
         ? <Signup />
-        : modal === 'login'
+        : modal && modal.type === 'login'
         ? <Login />
         : ''
       }
