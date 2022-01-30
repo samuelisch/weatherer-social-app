@@ -8,6 +8,7 @@ import Navbar from './navbar/Navbar'
 import styled from 'styled-components'
 import Content from './Content'
 import Modal from './posts/Modal'
+import { triggerNotification } from '../../reducers/notificationReducer'
 
 const StyledHome = styled.div`
   max-width: 720px;
@@ -43,7 +44,7 @@ const Home = () => {
       } catch (error) {
         navigate('/')
         await dispatch (logoutUser())
-        console.log('notify')
+        dispatch(triggerNotification('Session expired: Please log in again', false))
       }
     }
 

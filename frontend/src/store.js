@@ -5,12 +5,14 @@ import postReducer from './reducers/postReducer'
 import loginReducer from './reducers/loginReducer'
 import userReducer from './reducers/userReducer'
 import modalReducer from './reducers/modalReducer'
+import notificationReducer from './reducers/notificationReducer'
 
 const reducer = combineReducers({
   posts: postReducer,
   login: loginReducer,
   users: userReducer,
-  modal: modalReducer
+  modal: modalReducer,
+  notification: notificationReducer
 })
 
 const store = createStore(

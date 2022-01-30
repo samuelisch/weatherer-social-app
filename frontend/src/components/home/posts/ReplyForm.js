@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import { replyPost } from '../../../reducers/postReducer'
 import { closeModal } from '../../../reducers/modalReducer'
 import { logoutUser } from '../../../reducers/loginReducer'
+import { triggerNotification } from '../../../reducers/notificationReducer'
 
 const StyledForm = styled.form`
   display: flex;
@@ -69,7 +70,7 @@ const ReplyForm = ({ post, modal }) => {
     } catch (error) {
       navigate('/')
       await dispatch (logoutUser())
-      console.log('notify user')
+      dispatch(triggerNotification('Session expired: Please log in again', false))
     }
     if (modal) {
       await dispatch(closeModal())

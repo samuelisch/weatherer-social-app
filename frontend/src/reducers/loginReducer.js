@@ -33,20 +33,16 @@ export const initializeLogin = () => {
 
 export const loginUser = (credentials) => {
   return async dispatch => {
-    try {
-      let userResponse = await loginService.login(credentials)
-      window.localStorage.setItem(
-        'loggedAppUser', JSON.stringify(userResponse)
-      )
-      postService.setToken(userResponse.token)
-      const user = await userService.getOne(userResponse.id)
-      dispatch({
-        type: 'USER_LOGIN',
-        data: user
-      })
-    } catch (error) {
-      console.log('wrong username or password', error)
-    }
+    let userResponse = await loginService.login(credentials)
+    window.localStorage.setItem(
+      'loggedAppUser', JSON.stringify(userResponse)
+    )
+    postService.setToken(userResponse.token)
+    const user = await userService.getOne(userResponse.id)
+    dispatch({
+      type: 'USER_LOGIN',
+      data: user
+    })
   }
 }
 

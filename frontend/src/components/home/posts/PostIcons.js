@@ -10,6 +10,7 @@ import { faComment } from '@fortawesome/free-regular-svg-icons'
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons'
 import styled from 'styled-components'
 import { openModalReply } from '../../../reducers/modalReducer'
+import { triggerNotification } from '../../../reducers/notificationReducer'
 
 const StyledIconsRow = styled.div`
   display: flex;
@@ -90,7 +91,7 @@ const PostIcons = ({ post }) => {
   const handleErrorAuth = async () => {
     navigate('/')
     await dispatch (logoutUser())
-    console.log('notify user')
+    dispatch(triggerNotification('Session expired: Please log in again', false))
   }
 
   const handleReply = async (e) => {

@@ -6,6 +6,7 @@ import { createUser } from '../../../reducers/userReducer'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { closeModal } from '../../../reducers/modalReducer'
+import { triggerNotification } from '../../../reducers/notificationReducer'
 
 const StyledContainer = styled.div`
   width: 200px;
@@ -56,7 +57,7 @@ const SignupForm = () => {
   const signupHandler = async (e) => {
     e.preventDefault()
     const newName = e.target.signupName.value
-    const newUsername = e.target.signupUsername.value
+    const newUsername = e.target.signupUsername.value.toLowerCase()
     const newPassword = e.target.signupPassword.value
 
     const newUser = {
@@ -68,11 +69,13 @@ const SignupForm = () => {
     try {
       await dispatch(createUser(newUser))
       e.target.reset()
-      console.log('success')
+      dispatch(triggerNotification('User account created successfully', false))
       dispatch(closeModal())
       navigate('/login')
     } catch (error) {
-      console.log(error)
+      if (error.response) {
+        dispatch(triggerNotification(error.response.data.error, true))
+      }
     }
 
     e.target.signupPassword.value = ''

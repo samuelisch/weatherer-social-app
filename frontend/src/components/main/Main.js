@@ -116,7 +116,7 @@ const Main = () => {
             handleClick={() => dispatch(openModal('login'))}
           />
           </div>
-          <h3 className="testText">Testing the app?</h3>
+          <h3 className="testText">Testing the app? Use our public account.</h3>
           <Button 
             className="guestLoginButton"
             type="button"

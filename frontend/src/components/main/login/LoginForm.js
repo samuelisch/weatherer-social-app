@@ -6,6 +6,7 @@ import { loginUser } from '../../../reducers/loginReducer'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { closeModal } from '../../../reducers/modalReducer'
+import { triggerNotification } from '../../../reducers/notificationReducer'
 
 const StyledContainer = styled.div`
   width: 200px;
@@ -72,7 +73,7 @@ const LoginForm = () => {
 
   const loginHandler = async (e) => {
     e.preventDefault()
-    const username = e.target.loginUsername.value
+    const username = e.target.loginUsername.value.toLowerCase()
     const password = e.target.loginPassword.value
 
     try {
@@ -80,7 +81,7 @@ const LoginForm = () => {
       dispatch(closeModal())
       navigate('/main')
     } catch (error) {
-      console.log(error)
+      dispatch(triggerNotification(error.response.data.error, true))
     }
 
     e.target.reset()
