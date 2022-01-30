@@ -74,9 +74,10 @@ const ReplyForm = ({ post, modal }) => {
     e.preventDefault()
     try {
       const content = textboxValue
-      await dispatch(replyPost(content, post.id))
+      setTextboxValue('')
       e.target.replyContent.value = ''
       setButtonDisabled(true)
+      await dispatch(replyPost(content, post.id))
     } catch (error) {
       navigate('/')
       await dispatch (logoutUser())

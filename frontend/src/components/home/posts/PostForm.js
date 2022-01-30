@@ -83,10 +83,10 @@ const PostForm = ({ modal }) => {
     e.preventDefault()
     try {
       const content = e.target.content.value
-      await dispatch(createPost(content))
       setTextboxValue('')
       e.target.content.value = ''
       setButtonDisabled(true)
+      await dispatch(createPost(content))
     } catch (error) {
       navigate('/')
       await dispatch (logoutUser())

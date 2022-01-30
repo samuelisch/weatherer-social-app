@@ -64,7 +64,7 @@ const SinglePostPage = () => {
               <FontAwesomeIcon className="backIcon" icon={faArrowLeft} onClick={() => navigate(-1)} />
               <span className="description">Thread</span>
             </StyledInfo>
-            {post.replyToPost &&
+            {post && post.replyToPost &&
               <ReplyTo postId={post.replyToPost} />
             }
             <SinglePost 
