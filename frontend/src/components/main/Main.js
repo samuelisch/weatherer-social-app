@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import Button from '../assets/Button'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
-import { initializeUsers } from '../../reducers/userReducer'
+import { createUser, initializeUsers } from '../../reducers/userReducer'
 import { useDispatch, useSelector } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSmog } from '@fortawesome/free-solid-svg-icons'
@@ -10,6 +10,7 @@ import { openModal } from '../../reducers/modalReducer'
 import Signup from './signup/Signup'
 import Login from './login/Login'
 import { loginUser } from '../../reducers/loginReducer'
+import { generatePassword } from '../assets/generator'
 
 const StyledContainer = styled.div`
   padding: 30px 40px;
@@ -86,8 +87,19 @@ const Main = () => {
     dispatch(initializeUsers())
   })
 
+  const createGuestUser = async () => {
+    const randNum = Math.floor(Math.random() * 1000000)
+    const username = `guest${randNum}`
+    const name = `Guest ${randNum}`
+    const password = generatePassword(20)
+    await dispatch(createUser({name, username, password}))
+    return {name, username, password}
+  }
+
   const loginGuestUser = async () => {
-    await dispatch(loginUser({username: 'guestuser', password: 'acktutuopop'}))
+    const guest = await createGuestUser()
+    console.log(guest)
+    await dispatch(loginUser(guest))
     navigate('/home')
   }
 
@@ -116,7 +128,7 @@ const Main = () => {
             handleClick={() => dispatch(openModal('login'))}
           />
           </div>
-          <h3 className="testText">Testing the app? Use our public account.</h3>
+          <h3 className="testText">Testing the app? Use a temporary guest account.</h3>
           <Button 
             className="guestLoginButton"
             type="button"
