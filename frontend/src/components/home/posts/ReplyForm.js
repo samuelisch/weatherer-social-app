@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import Textbox from '../../assets/Textbox'
 import Button from '../../assets/Button'
@@ -54,6 +54,15 @@ const ReplyForm = ({ post, modal }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [textboxValue, setTextboxValue] = useState('')
+  const [buttonDisabled, setButtonDisabled] = useState(true)
+
+  useEffect(() => {
+    if (textboxValue) {
+      setButtonDisabled(false)
+    } else {
+      setButtonDisabled(true)
+    }
+  }, [textboxValue])
 
   const handleInputChange = (e) => {
     const textbox = e.target
@@ -67,6 +76,7 @@ const ReplyForm = ({ post, modal }) => {
       const content = textboxValue
       await dispatch(replyPost(content, post.id))
       e.target.replyContent.value = ''
+      setButtonDisabled(true)
     } catch (error) {
       navigate('/')
       await dispatch (logoutUser())
@@ -92,7 +102,7 @@ const ReplyForm = ({ post, modal }) => {
         className="newReplyButton"
         type="submit"
         text="Reply"
-        disabled={!textboxValue}
+        disabled={buttonDisabled}
       />
     </StyledForm>
   )
