@@ -3,13 +3,13 @@ const Post = require('../models/post')
 const User = require('../models/user')
 const userExtractor = require('../utils/middleware').userExtractor;
 
-postsRouter.get('/', async (request, response) => {
+postsRouter.get('/', userExtractor, async (request, response) => {
   const fetchedPosts = await Post
     .find({})
   response.json(fetchedPosts)
 });
 
-postsRouter.get('/:id', async (request, response) => {
+postsRouter.get('/:id', userExtractor, async (request, response) => {
   const post = await Post.findById(request.params.id)
   if (post) {
     response.json(post)
