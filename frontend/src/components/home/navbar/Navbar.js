@@ -35,7 +35,7 @@ const Navbar = ({ user }) => {
         <Icon iconType="home" text="Home" handleNavigate={() => navigate('/home')} />
         <Icon iconType="search" text="Search" handleNavigate={() => navigate('search')} />
         <Icon iconType="profile" text="Profile" handleNavigate={() => navigate(`user/${user.username}`)} />
-        <Icon iconType="weather" text="Weather" handleNavigate={() => console.log('weather')} />
+        <Icon iconType="weather" text="Weather" handleNavigate={() => console.log('weather feature')} />
         <Icon iconType="add" text="New post" handleNavigate={() => dispatch(openModal('add'))} />
       </StyledNav>
       <Icon iconType="logout" text="Logout" handleNavigate={handleLogout} />
