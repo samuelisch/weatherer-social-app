@@ -16,6 +16,8 @@ const User = () => {
   useEffect(() => {
     if (user) {
       setLoaded(true)
+    } else {
+      setLoaded(false)
     }
   }, [user])
 

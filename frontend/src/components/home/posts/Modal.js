@@ -38,6 +38,8 @@ const Modal = ({ modal }) => {
   useEffect(() => {
     if (post) {
       setIsLoaded(true)
+    } else {
+      setIsLoaded(false)
     }
   }, [post])
 

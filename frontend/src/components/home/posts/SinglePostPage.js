@@ -15,6 +15,8 @@ const SinglePostPage = () => {
   useEffect(() => {
     if (post && user) {
       setIsLoaded(true)
+    } else {
+      setIsLoaded(false)
     }
   }, [post, user])
 

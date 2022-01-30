@@ -79,7 +79,7 @@ const PostIcons = ({ post, user }) => {
   }, [user, post])
 
   useEffect(() => {
-    if (post.likedBy.includes(user.id)) {
+    if (user && post.likedBy.includes(user.id)) {
       setIsLiked(true)
     } else {
       setIsLiked(false)
