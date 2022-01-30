@@ -116,6 +116,7 @@ const PostIcons = ({ post }) => {
   const handleDelete = async (e) => {
     e.stopPropagation()
     try {
+      navigate(-1)
       await dispatch(deletePost(post.id))
     } catch (error) {
       handleErrorAuth()

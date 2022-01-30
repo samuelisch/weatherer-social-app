@@ -18,7 +18,10 @@ const ReplyTo = ({ postId }) => {
   return (
     <StyledContainer>
       <StyledParent>
-        <Post post={post} />
+        {post 
+          ? <Post post={post} />
+          : <h2>Post has been removed.</h2> 
+        }
       </StyledParent>
     </StyledContainer>
   )
