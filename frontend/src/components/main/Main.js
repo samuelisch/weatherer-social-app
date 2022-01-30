@@ -98,7 +98,6 @@ const Main = () => {
 
   const loginGuestUser = async () => {
     const guest = await createGuestUser()
-    console.log(guest)
     await dispatch(loginUser(guest))
     navigate('/home')
   }
