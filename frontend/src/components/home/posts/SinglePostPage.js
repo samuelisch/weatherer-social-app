@@ -41,7 +41,6 @@ const StyledInfo = styled.div`
 
 const SinglePostPage = () => {
   const [isLoaded, setIsLoaded] = useState(false)
-  const [postParent, setPostParent] = useState(null)
   const navigate = useNavigate()
   const params = useParams()
   const { postId } = params

@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { getPostFromId } from '../../../reducers/postReducer'
 import PostIcons from './PostIcons'
 import TimeAgo from '../../assets/TimeAgo'
 
@@ -8,6 +10,11 @@ const StyledContainer = styled.div`
   &:hover {
     cursor: pointer;
   }
+`
+
+const StyledReplyText = styled.div`
+  color: rgb(150, 150, 150);
+  margin-bottom: 5px;
 `
 
 const StyledNameRow = styled.div`
@@ -42,6 +49,8 @@ const StyledContent = styled.div`
 
 const Post = ({ post }) => {
   const postAuthor = post.user
+  const replyPostId = post.replyToPost
+  const replyPost = useSelector(({ posts }) => getPostFromId(posts, replyPostId))
   const navigate = useNavigate()
 
   const viewUser = (e) => {
@@ -55,6 +64,11 @@ const Post = ({ post }) => {
 
   return (
     <StyledContainer onClick={viewPost}>
+      {replyPost && 
+        <StyledReplyText>
+          replying to @{replyPost.user.username}
+        </StyledReplyText>
+      }
       <StyledNameRow>
         <div className="nameDetails" onClick={viewUser}>
           <span className="name">{postAuthor.name}</span>
