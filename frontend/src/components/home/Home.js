@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { initializeLogin } from '../../reducers/loginReducer'
+import { useNavigate } from 'react-router-dom'
+import { initializeLogin, logoutUser } from '../../reducers/loginReducer'
 import { initializeUsers } from '../../reducers/userReducer'
 import { initializePosts } from '../../reducers/postReducer'
 import Navbar from './navbar/Navbar'
@@ -22,6 +23,7 @@ const StyledHome = styled.div`
 const Home = () => {
   const [isLoaded, setIsLoaded] = useState(false)
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const users = useSelector(state => state.users)
   const user = useSelector(state => state.login)
   const modal = useSelector(state => state.modal)
@@ -35,10 +37,20 @@ const Home = () => {
   }, [users, user])
 
   useEffect(() => {
+    const getPosts = async () => {
+      try {
+        await dispatch(initializePosts())
+      } catch (error) {
+        navigate('/')
+        await dispatch (logoutUser())
+        console.log('notify')
+      }
+    }
+
     dispatch(initializeLogin())
     dispatch(initializeUsers())
-    dispatch(initializePosts())
-  }, [dispatch])
+    getPosts()
+  }, [dispatch, navigate])
 
   return (
     <>
