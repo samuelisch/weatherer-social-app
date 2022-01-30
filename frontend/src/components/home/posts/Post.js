@@ -4,11 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import PostIcons from './PostIcons'
 import TimeAgo from '../../assets/TimeAgo'
 
-const StyledItem = styled.li`
-  border: 1px solid rgb(85, 85, 85);
-  border-width: 0 1px 1px;
-  padding: 10px 15px 5px;
-
+const StyledContainer = styled.div`
   &:hover {
     cursor: pointer;
   }
@@ -44,7 +40,7 @@ const StyledContent = styled.div`
   font-size: 1.3rem;
 `
 
-const Post = ({ post, user }) => {
+const Post = ({ post }) => {
   const postAuthor = post.user
   const navigate = useNavigate()
 
@@ -58,7 +54,7 @@ const Post = ({ post, user }) => {
   }
 
   return (
-    <StyledItem onClick={viewPost}>
+    <StyledContainer onClick={viewPost}>
       <StyledNameRow>
         <div className="nameDetails" onClick={viewUser}>
           <span className="name">{postAuthor.name}</span>
@@ -69,8 +65,8 @@ const Post = ({ post, user }) => {
       <StyledContent>
         {post.content}
       </StyledContent>
-      <PostIcons post={post} user={user} />
-    </StyledItem>
+      <PostIcons post={post} />
+    </StyledContainer>
   )
 }
 

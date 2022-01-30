@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { likePost, unlikePost, deletePost } from '../../../reducers/postReducer'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { logoutUser } from '../../../reducers/loginReducer'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -65,9 +65,10 @@ const StyledIconsRow = styled.div`
 `
 
 
-const PostIcons = ({ post, user }) => {
+const PostIcons = ({ post }) => {
   const [isLiked, setIsLiked] = useState(false)
   const [isUserPost, setIsUserPost] = useState(false)
+  const user = useSelector(state => state.login)
   const dispatch = useDispatch()
   const navigate = useNavigate()
 

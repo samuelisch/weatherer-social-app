@@ -9,10 +9,15 @@ const StyledList = styled.ul`
   margin: 0;
 `
 
+const StyledPostContainer = styled.div`
+  border: 1px solid rgb(85, 85, 85);
+  border-width: 0 1px 1px;
+  padding: 10px 15px 5px;
+`
+
 const PostsList = ({ filterKey, type }) => {
   const [filteredPosts, setFilteredPosts] = useState([])
   const posts = useSelector(state => state.posts)
-  const user = useSelector(state => state.login)
 
   useEffect(() => {
     if (type === 'userId') {
@@ -32,11 +37,11 @@ const PostsList = ({ filterKey, type }) => {
 
   const postsToRender = orderedPosts.map(post => {
     return (
-      <Post 
-        key={post.id}
-        post={post}
-        user={user}
-      />
+      <StyledPostContainer key={post.id}>
+        <Post 
+          post={post}
+        />
+      </StyledPostContainer>
     )
   })
 
