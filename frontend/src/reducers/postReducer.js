@@ -78,7 +78,6 @@ export const unlikePost = (post) => {
   return async dispatch => {
     const newPost = { ...post, likes: post.likes - 1}
     const returnedPost = await postService.update(post.id, newPost, 'unlike')
-    console.log('unliking post server')
     dispatch({
       type: 'LIKE_POST',
       data: returnedPost
