@@ -1,4 +1,4 @@
-# weatherer-social-app
+# Weatherer Social Application
 
 ## Development in progress
 
