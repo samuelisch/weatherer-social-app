@@ -42,6 +42,7 @@ const StyledNameRow = styled.div`
 const StyledContent = styled.div`
   padding: 5px 0;
   font-size: 2rem;
+  word-wrap: break-word;
 `
 
 const SinglePost = ({ post, user }) => {

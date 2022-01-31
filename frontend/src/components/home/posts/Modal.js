@@ -28,6 +28,7 @@ const StyledNameRow = styled.div`
 const StyledContent = styled.div`
   padding: 5px 0 10px;
   font-size: 1.3rem;
+  word-wrap: break-word;
 `
 
 
