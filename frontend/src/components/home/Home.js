@@ -43,14 +43,14 @@ const Home = () => {
         await dispatch(initializePosts())
       } catch (error) {
         navigate('/')
-        await dispatch (logoutUser())
+        dispatch (logoutUser())
         dispatch(triggerNotification('Session expired: Please log in again', false))
       }
     }
 
     dispatch(initializeLogin())
-    dispatch(initializeUsers())
     getPosts()
+    dispatch(initializeUsers())
   }, [dispatch, navigate])
 
   return (
