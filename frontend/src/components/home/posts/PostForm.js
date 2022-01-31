@@ -64,7 +64,7 @@ const PostForm = ({ modal }) => {
   const [buttonDisabled, setButtonDisabled] = useState(true)
 
   useEffect(() => {
-    if (textboxValue) {
+    if (textboxValue && textboxValue.length < 210) {
       setButtonDisabled(false)
     } else {
       setButtonDisabled(true)
