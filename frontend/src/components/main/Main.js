@@ -12,9 +12,20 @@ import Login from './login/Login'
 import { loginUser } from '../../reducers/loginReducer'
 import { generatePassword } from '../assets/generator'
 
+const StyledPage = styled.div`
+  display: flex;
+  justify-content: start;
+
+  @media (min-width: 1240px) {
+    justify-content: center;
+  }
+`
+
 const StyledContainer = styled.div`
   padding: 30px 40px;
   position: relative;
+  display: flex;
+
 `
 
 const StyledMain = styled.div`
@@ -65,6 +76,13 @@ const StyledMain = styled.div`
       background-color: rgba(10, 130, 10, 0.1);
     }
   }
+
+  @media (min-width: 1240px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
 `
 
 const StyledIcon = styled.div`
@@ -103,7 +121,7 @@ const Main = () => {
   }
 
   return (
-    <div>
+    <StyledPage>
       <StyledContainer>
         <StyledIcon>
           <FontAwesomeIcon icon={faSmog} size="3x" />
@@ -142,7 +160,7 @@ const Main = () => {
         ? <Login />
         : ''
       }
-    </div>
+    </StyledPage>
   )
 }
 
