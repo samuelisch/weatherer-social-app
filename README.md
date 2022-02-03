@@ -2,7 +2,7 @@
 A full-stack MERN application loosely based on Twitter
 
 ### Access
-- The project is hosted on Heroku, and can be accessed with [this link](https://sleepy-bastion-10961.herokuapp.com)
+- The project is hosted on Heroku, and can be accessed by visiting this link [Weatherer Social App](https://sleepy-bastion-10961.herokuapp.com)
 - User is able to create a new permanent account, or sign in with a temporary guest account, which authentication will expire in 60minutes.
 
 ### Motivation
